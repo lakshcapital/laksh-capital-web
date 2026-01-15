@@ -1,0 +1,160 @@
+"use client";
+import Image from "next/image";
+import { Badge } from "./ui/badge";
+import { Card, CardContent, CardFooter } from "./ui/card";
+import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import Masonry from "react-masonry-css";
+import AutoScroll from "embla-carousel-auto-scroll";
+
+const TESTIMONIALS = [
+  {
+    name: "Harshil Bhadra",
+    designation: "Business Owner",
+    company: "L Trikhamdas",
+    message:
+      "I've had two one-on-one sessions with Dhruval, and he's truly exceptional at wealth management. He reviewed my portfolio, guided me with clear action points backed by real client case studies, and explained concepts like HUF in simple, practical language. His knowledge and clarity are highly impressive.",
+  },
+  {
+    name: "CA Malay Shah",
+    designation: "Assistant Manager",
+    company: "Deloitte India",
+    message:
+      "Working with Laksh Capital has been an outstanding experience. Dhruval consistently demonstrates a strong commitment to innovative wealth creation strategies, with a clear focus on client success reflected in the results achieved.",
+  },
+  {
+    name: "Rushabh Parikh",
+    designation: "Business Owner",
+    company: "Atithi Devo Bhav Holidays",
+    message:
+      "Laksh Capital helped me understand that investments shouldn't be seen in isolation. They assessed my risk profile, goals, and tax planning needs to create a customised portfolio. Their strategies boosted my confidence, and my portfolio turned positive within two months.",
+  },
+  {
+    name: "Hardik Maniar",
+    designation: "Associate Director",
+    company: "MnM Talkies",
+    message:
+      "Our financial journey with Laksh Capital has been excellent. They understood our goals and guided us to diversify investments effectively, helping us move closer to achieving them. Their philosophy of building for tomorrow is truly reflected in their work.",
+  },
+  {
+    name: "Karan Kummble",
+    designation: "Business Owner",
+    company: "KK Manpower Services",
+    message:
+      "I had absolutely no idea about finance or where to even start with investments. When I met Dhruval, he patiently walked me through the basics and explained mutual funds in a way that was easy to understand. He didn't just give advice — he showed me how it actually works, with examples that made sense to me. For the first time, I could see a clear path for growing my money and planning for the future. His guidance has made me feel confident about making financial decisions that I once found overwhelming.",
+  },
+  {
+    name: "Suryansh Yadav",
+    designation: "Software Engineer",
+    company: "Advanced Infrastructure",
+    message:
+      "Laksh Capital helped me cut through the noise and focus on the right investments aligned with my long-term goals. I appreciated their structured, data-backed approach and the clarity they brought to every decision. Their guidance feels thoughtful, ethical, and truly personalized.",
+  },
+];
+
+interface TestimonialCardProps {
+  name: string;
+  designation: string;
+  company: string;
+  message: string;
+  avatarSrc?: string;
+  className?: string;
+}
+
+const TestimonialCard = ({
+  name,
+  designation,
+  company,
+  message,
+  avatarSrc = "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-1.webp",
+}: TestimonialCardProps) => {
+  return (
+    <Card className="py-6 shadow-sm max-w-md">
+      <CardContent className="pt-6 leading-7 text-foreground/70">
+        <q>{message}</q>
+      </CardContent>
+      <CardFooter className="[.border-t]:pt-6">
+        <div className="flex gap-4 leading-5 tracking-wide">
+          <span
+            data-slot="avatar"
+            className="relative flex shrink-0 overflow-hidden size-9 rounded-full ring-1 ring-input"
+          >
+            <Image
+              width={80}
+              height={80}
+              data-slot="avatar-image"
+              className="aspect-square size-full"
+              alt={name}
+              src={avatarSrc}
+            />
+          </span>
+          <div className="text-sm">
+            <p className="font-medium">{name}</p>
+            <p className="text-muted-foreground">{designation}</p>
+            <p className="text-muted-foreground">{company}</p>
+          </div>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+};
+
+const Testimonials = () => {
+  return (
+    <section
+      id="testimonials"
+      className="py-16 md:py-24 lg:py-28 w-full bg-primary/10"
+    >
+      <div className="container">
+        <div className="flex flex-col items-center gap-6">
+          <Badge variant="outline" className="font-semibold">
+            Testimonials
+          </Badge>
+          <h2 className="mb-2 text-center text-3xl font-semibold lg:text-6xl">
+            Meet our happy clients
+          </h2>
+          <p className="text-muted-foreground lg:text-lg">
+            Real experiences from clients who trust us with their financial
+            journey
+          </p>
+
+          <div className="my-6 block lg:mt-14 lg:hidden">
+            <Carousel
+              className="relative w-full max-w-80"
+              opts={{ loop: true }}
+              plugins={[
+                AutoScroll({
+                  playOnInit: true,
+                  speed: 1,
+                  stopOnFocusIn: true,
+                  stopOnInteraction: true,
+                }),
+              ]}
+            >
+              <CarouselContent>
+                {TESTIMONIALS.map((testimonial, i) => (
+                  <CarouselItem key={i}>
+                    <TestimonialCard {...testimonial} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+          <div className="mt-14 hidden w-full overflow-hidden lg:block">
+            <Masonry
+              breakpointCols={3}
+              className="flex gap-6 [&>div:nth-child(1)]:translate-y-15 [&>div:nth-child(3)]:translate-y-15"
+              columnClassName="masonry-column flex flex-col gap-6"
+            >
+              {TESTIMONIALS.map((testimonial, i) => (
+                <TestimonialCard key={i} {...testimonial} />
+              ))}
+            </Masonry>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Testimonials;
