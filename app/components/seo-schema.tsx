@@ -9,7 +9,7 @@ export default function SeoSchema() {
           name: "Laksh Capital",
           url: "https://www.lakshcapital.in",
           description:
-            "Wealth management and investment advisory offering mutual funds, PMS, AIF, insurance, and retirement planning.",
+            "Wealth management and investment solutions offering mutual funds, PMS, AIF, SIF, GIFT city funds, NRI investing and retirement planning.",
           areaServed: "IN",
           sameAs: ["https://www.linkedin.com/company/lakshcapital"],
         }),

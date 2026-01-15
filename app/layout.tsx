@@ -5,19 +5,19 @@ import LenisWrapper from "@/lib/lenis";
 
 export const metadata: Metadata = {
   title: {
-    default: "Laksh Capital | Trusted Wealth & Investment Advisory",
+    default: "Laksh Capital | Trusted Wealth Management Firm",
     template: "%s | Laksh Capital",
   },
   description:
-    "Laksh Capital provides transparent wealth management, mutual funds, PMS, AIF, insurance, and long-term investment solutions tailored to your goals.",
+    "Laksh Capital provides transparent wealth management, mutual funds, PMS, AIF, SIF, GIFT city funds, NRI investing and long-term investment solutions tailored to your goals.",
   keywords: [
     "wealth management India",
-    "investment advisory",
+    "investment",
     "mutual funds",
     "PMS",
     "AIF",
     "financial planning",
-    "insurance advisory",
+    "insurance",
     "NPS",
     "Laksh Capital",
   ],
@@ -30,17 +30,17 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "Laksh Capital | Trusted Wealth & Investment Advisory",
+    title: "Laksh Capital | Trusted Wealth Management Firm",
     description:
       "Expert-led wealth management and investment solutions focused on long-term growth and clarity.",
     url: "https://www.lakshcapital.in",
     siteName: "Laksh Capital",
     images: [
       {
-        url: "/og-image.jpeg",
-        width: 1226,
-        height: 908,
-        alt: "Laksh Capital Wealth Advisory",
+        url: "https://www.lakshcapital.in/og-image.jpeg",
+        width: 1200,
+        height: 628,
+        alt: "Laksh Capital Wealth Management",
       },
     ],
     locale: "en_IN",
@@ -48,10 +48,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Laksh Capital | Trusted Wealth Advisory",
+    title: "Laksh Capital | Trusted Wealth Management Firm",
     description:
-      "Personalized investment and insurance solutions built for long-term wealth creation.",
-    images: ["/og-image.jpeg"],
+      "Personalized wealth management and investment solutions built for long-term wealth creation.",
+    images: ["https://www.lakshcapital.in/og-image.jpeg"],
   },
 };
 
