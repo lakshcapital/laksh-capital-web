@@ -36,7 +36,7 @@ const TESTIMONIALS = [
       "Our financial journey with Laksh Capital has been excellent. They understood our goals and guided us to diversify investments effectively, helping us move closer to achieving them. Their philosophy of building for tomorrow is truly reflected in their work.",
   },
   {
-    name: "Karan Kummble",
+    name: "Karan Kamble",
     designation: "Business Owner",
     company: "KK Manpower Services",
     message:
