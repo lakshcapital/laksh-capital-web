@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "Laksh Capital",
     images: [
       {
-        url: "https://www.lakshcapital.in/og-image.jpeg",
+        url: "https://www.lakshcapital.in/og-image.jpg",
         width: 1200,
         height: 628,
         alt: "Laksh Capital Wealth Management",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Laksh Capital | Trusted Wealth Management Firm",
     description:
       "Personalized wealth management and investment solutions built for long-term wealth creation.",
-    images: ["https://www.lakshcapital.in/og-image.jpeg"],
+    images: ["https://www.lakshcapital.in/og-image.jpg"],
   },
 };
 
