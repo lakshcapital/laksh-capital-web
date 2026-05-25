@@ -24,6 +24,10 @@ const NAV_MENUS = [
     href: "#contact",
     label: "Contact",
   },
+  {
+    href: "/blog",
+    label: "Blog",
+  },
 ];
 
 const SOCIALS = [
@@ -70,8 +74,10 @@ const Header = () => {
                   <Link
                     href={menu.href}
                     onClick={(e) => {
-                      e.preventDefault();
-                      scrollTo(menu.href);
+                      if (menu.href.startsWith("#")) {
+                        e.preventDefault();
+                        scrollTo(menu.href);
+                      }
                     }}
                   >
                     {menu.label}

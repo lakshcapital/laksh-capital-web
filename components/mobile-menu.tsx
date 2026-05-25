@@ -66,9 +66,11 @@ const MobileMenu = ({ navMenus, socials }: MobileMenuProps) => {
                 <Link
                   href={menu.href}
                   onClick={(e) => {
-                    e.preventDefault();
-                    lenis?.start();
-                    scrollTo(menu.href);
+                    if (menu.href.startsWith("#")) {
+                      e.preventDefault();
+                      lenis?.start();
+                      scrollTo(menu.href);
+                    }
                     setIsMenuVisible(false);
                   }}
                 >
