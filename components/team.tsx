@@ -6,8 +6,10 @@ import siddharthImg from "@/assets/team/siddharth.jpeg";
 import punitImg from "@/assets/team/punit.jpeg";
 import rachitImg from "@/assets/team/rachit.jpeg";
 import hardikImg from "@/assets/team/hardik.jpeg";
+import { getAllTeamMembers } from "@/sanity/queries";
+import { urlFor } from "@/sanity/image";
 
-interface TeamMember {
+interface TeamMemberItem {
   id: string;
   name: string;
   role: string;
@@ -15,14 +17,21 @@ interface TeamMember {
 }
 
 interface TeamProps {
-  members?: TeamMember[];
   className?: string;
 }
 
 interface MemberProps {
-  member: TeamMember;
+  member: TeamMemberItem;
   className?: string;
 }
+
+const FALLBACK_MEMBERS: TeamMemberItem[] = [
+  { id: "fallback-1", name: "CA Dhruval Shah", role: "Founder & Managing Director", avatar: dhruvalImg.src },
+  { id: "fallback-2", name: "CA Siddharth Mehta", role: "Head of Overseas Investments", avatar: siddharthImg.src },
+  { id: "fallback-3", name: "CA Punit Sheth", role: "Head of Strategy", avatar: punitImg.src },
+  { id: "fallback-4", name: "CA Rachit Diyora", role: "Business Development", avatar: rachitImg.src },
+  { id: "fallback-5", name: "CA Hardik Mehta", role: "Head of Investments", avatar: hardikImg.src },
+];
 
 const Member = ({ member, className }: MemberProps) => {
   return (
@@ -36,7 +45,7 @@ const Member = ({ member, className }: MemberProps) => {
         <Image
           width={320}
           height={540}
-          alt="John Doe"
+          alt={member.name}
           className="pointer-events-none h-full w-full object-cover object-top"
           src={member.avatar}
         />
@@ -51,41 +60,20 @@ const Member = ({ member, className }: MemberProps) => {
   );
 };
 
-const Team = ({
-  members = [
-    {
-      id: "member-1",
-      name: "CA Dhruval Shah",
-      role: "Founder & Managing Director",
-      avatar: dhruvalImg.src,
-    },
-    {
-      id: "member-2",
-      name: "CA Siddharth Mehta",
-      role: "Head of Overseas Investments",
-      avatar: siddharthImg.src,
-    },
-    {
-      id: "member-3",
-      name: "CA Punit Sheth",
-      role: "Head of Strategy",
-      avatar: punitImg.src,
-    },
-    {
-      id: "member-4",
-      name: "CA Rachit Diyora",
-      role: "Business Development",
-      avatar: rachitImg.src,
-    },
-    {
-      id: "member-5",
-      name: "CA Hardik Mehta",
-      role: "Head of Investments",
-      avatar: hardikImg.src,
-    },
-  ],
-  className,
-}: TeamProps) => {
+const Team = async ({ className }: TeamProps) => {
+  const sanity = await getAllTeamMembers();
+  const members: TeamMemberItem[] = sanity.length
+    ? sanity.map((m) => ({
+        id: m._id,
+        name: m.name,
+        role: m.role,
+        avatar: urlFor(m.avatar).width(640).height(720).fit("crop").url(),
+      }))
+    : FALLBACK_MEMBERS;
+
+  const firstRow = members.slice(0, 3);
+  const secondRow = members.slice(3);
+
   return (
     <section
       id="team"
@@ -114,14 +102,17 @@ const Team = ({
         </div>
       </div>
       <div className="container flex flex-col justify-center items-center gap-8 mb-8 md:flex-row">
-        <Member member={members[0]} />
-        <Member member={members[1]} />
-        <Member member={members[2]} />
+        {firstRow.map((m) => (
+          <Member key={m.id} member={m} />
+        ))}
       </div>
-      <div className="container flex flex-col justify-center items-center gap-8 md:flex-row">
-        <Member member={members[3]} />
-        <Member member={members[4]} />
-      </div>
+      {secondRow.length > 0 && (
+        <div className="container flex flex-col justify-center items-center gap-8 md:flex-row">
+          {secondRow.map((m) => (
+            <Member key={m.id} member={m} />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-
 import {
   Accordion,
   AccordionContent,
@@ -7,8 +6,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { JSX } from "react";
+import { PortableText, PortableTextComponents } from "@portabletext/react";
+import { getAllFaqItems } from "@/sanity/queries";
+import { FaqItem as SanityFaqItem } from "@/sanity/types";
 
-interface FaqItem {
+interface FaqRenderItem {
   id: string;
   question: string;
   answer: JSX.Element;
@@ -17,11 +19,56 @@ interface FaqItem {
 interface FAQProps {
   heading?: string;
   description?: string;
-  items?: FaqItem[];
   className?: string;
 }
 
-const faqItems = [
+const faqPortableTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p>{children}</p>,
+  },
+  marks: {
+    strong: ({ children }) => (
+      <span className="font-medium text-foreground">{children}</span>
+    ),
+    em: ({ children }) => <em>{children}</em>,
+    link: ({ value, children }) => (
+      <a
+        href={value?.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary underline underline-offset-4"
+      >
+        {children}
+      </a>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-5 space-y-1">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-5 space-y-1">{children}</ol>
+    ),
+  },
+  types: {
+    quote: ({ value }) => (
+      <blockquote className="border-l-4 border-primary pl-4 italic text-primary">
+        {value?.text}
+        {value?.author && (
+          <span className="block mt-1 text-xs">- {value.author}</span>
+        )}
+      </blockquote>
+    ),
+  },
+};
+
+const renderSanityAnswer = (item: SanityFaqItem): JSX.Element => (
+  <div className="space-y-3 text-sm">
+    <PortableText value={item.answer} components={faqPortableTextComponents} />
+  </div>
+);
+
+const FALLBACK_ITEMS: FaqRenderItem[] = [
   {
     id: "1",
     question: "Who do we work with?",
@@ -230,12 +277,20 @@ const faqItems = [
   },
 ];
 
-const FAQ = ({
+const FAQ = async ({
   heading = "Frequently asked questions",
   description = "Find answers to common questions about our products. Can't find what you're looking for? Contact our support team.",
-  items = faqItems,
   className,
 }: FAQProps) => {
+  const sanity = await getAllFaqItems();
+  const items: FaqRenderItem[] = sanity.length
+    ? sanity.map((item) => ({
+        id: item._id,
+        question: item.question,
+        answer: renderSanityAnswer(item),
+      }))
+    : FALLBACK_ITEMS;
+
   return (
     <section id="faq" className={cn("py-16 md:py-24 lg:py-28", className)}>
       <div className="container space-y-16">
