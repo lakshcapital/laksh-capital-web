@@ -16,7 +16,18 @@ export default defineType({
       title: "Answer",
       type: "array",
       of: [
-        { type: "block" },
+        {
+          type: "block",
+          marks: {
+            decorators: [
+              { title: "Bold (dark)", value: "strong" },
+              { title: "Italic", value: "em" },
+              { title: "Highlight (primary color)", value: "highlight" },
+              { title: "Muted", value: "muted" },
+              { title: "Code", value: "code" },
+            ],
+          },
+        },
         {
           type: "object",
           name: "quote",

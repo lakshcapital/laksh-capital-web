@@ -28,9 +28,20 @@ const faqPortableTextComponents: PortableTextComponents = {
   },
   marks: {
     strong: ({ children }) => (
-      <span className="font-medium text-foreground">{children}</span>
+      <span className="font-semibold text-foreground">{children}</span>
     ),
     em: ({ children }) => <em>{children}</em>,
+    highlight: ({ children }) => (
+      <span className="text-primary font-medium">{children}</span>
+    ),
+    muted: ({ children }) => (
+      <span className="text-muted-foreground">{children}</span>
+    ),
+    code: ({ children }) => (
+      <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+        {children}
+      </code>
+    ),
     link: ({ value, children }) => (
       <a
         href={value?.href}
