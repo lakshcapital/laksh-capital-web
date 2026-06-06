@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { ReactNode } from "react";
 import Image from "next/image";
 import Logos from "./logos";
+import HeroIllustration from "./hero-illustration";
 
 interface HeroProps {
   badge?: string;
@@ -22,7 +23,7 @@ interface HeroProps {
       url: string;
     };
   };
-  image: {
+  image?: {
     src: string;
     alt: string;
   };
@@ -34,15 +35,9 @@ const Hero = ({
   heading,
   description,
   buttons = {
-    primary: {
-      text: "",
-      url: "",
-    },
+    primary: { text: "", url: "" },
   },
-  image = {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
-    alt: "Hero section demo image showing interface components",
-  },
+  image,
   className,
 }: HeroProps) => {
   return (
@@ -94,13 +89,17 @@ const Hero = ({
               )}
             </div>
           </div>
-          <Image
-            width={1920}
-            height={1080}
-            src={image.src}
-            alt={image.alt}
-            className="max-h-96 w-full rounded-md object-cover shadow-sm backdrop-blur-md"
-          />
+          {image ? (
+            <Image
+              width={1920}
+              height={1080}
+              src={image.src}
+              alt={image.alt}
+              className="max-h-96 w-full rounded-md object-cover shadow-sm backdrop-blur-md"
+            />
+          ) : (
+            <HeroIllustration />
+          )}
         </div>
         <Logos />
       </div>
@@ -109,82 +108,3 @@ const Hero = ({
 };
 
 export default Hero;
-
-// interface HeroProps {
-//   icon?: React.ReactNode;
-//   heading: string;
-//   description: string;
-//   button: {
-//     text: string;
-//     icon?: React.ReactNode;
-//     url: string;
-//     className?: string;
-//   };
-//   trustText?: string;
-//   imageSrc?: string;
-//   imageAlt?: string;
-//   className?: string;
-// }
-// const Hero = ({
-//   icon = <Wifi className="size-6" />,
-//   heading,
-//   description,
-//   button,
-//   trustText,
-//   imageSrc,
-//   imageAlt,
-//   className,
-// }: HeroProps) => {
-//   return (
-//     <section className={cn("overflow-hidden py-32", className)}>
-//       <div className="container">
-//         <div className="flex flex-col gap-5">
-//           <div className="relative flex flex-col gap-5">
-//             <div
-//               style={{
-//                 transform: "translate(-50%, -50%)",
-//               }}
-//               className="absolute top-1/2 left-1/2 -z-10 mx-auto size-200 rounded-full border mask-[linear-gradient(to_top,transparent,transparent,white,white,white,transparent,transparent)] p-16 md:size-325 md:p-32"
-//             >
-//               <div className="size-full rounded-full border p-16 md:p-32">
-//                 <div className="size-full rounded-full border"></div>
-//               </div>
-//             </div>
-//             <span className="mx-auto flex size-16 items-center justify-center rounded-full border md:size-20">
-//               {icon}
-//             </span>
-//             <h2 className="mx-auto max-w-5xl text-center text-3xl font-medium text-balance md:text-6xl">
-//               {heading}
-//             </h2>
-//             <p className="mx-auto max-w-3xl text-center text-muted-foreground md:text-lg">
-//               {description}
-//             </p>
-//             <div className="flex flex-col items-center justify-center gap-3 pt-3 pb-12">
-//               <Button
-//                 size="lg"
-//                 className="bg-linear-to-br from-primary to-green-500"
-//                 asChild
-//               >
-//                 <a href={button.url}>
-//                   {button.text} {button.icon}
-//                 </a>
-//               </Button>
-//               {trustText && (
-//                 <div className="text-xs text-muted-foreground">{trustText}</div>
-//               )}
-//             </div>
-//           </div>
-//           <Image
-//             src={imageSrc}
-//             alt={imageAlt}
-//             width={1920}
-//             height={1281}
-//             className="mx-auto h-full max-h-131 w-full max-w-5xl rounded-t-2xl object-cover mask-b-from-50%"
-//           />
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Hero;

@@ -11,6 +11,7 @@ import Team from "@/components/team";
 import { HERO, SERVICES } from "@/data";
 import ScrollToTop from "@/components/scroll-to-top";
 import LatestBlogs from "@/components/latest-blogs";
+import TrustStrip from "@/components/trust-strip";
 
 export default function Home() {
   return (
@@ -30,8 +31,8 @@ export default function Home() {
             },
           }}
           badge={HERO.badge}
-          image={{ src: HERO.heroImgSrc, alt: HERO.heroImgAlt }}
         />
+        <TrustStrip />
         <About
           description="We offer wealth management solutions, furnishing accurate information to investors and providing impartial guidance to achieve their financial objectives. Our dedicated team is focused on generating wealth for clients in alignment with their individual needs and aspirations, all aimed at attaining their financial milestones."
           missionText="To be the trusted partner in shaping our client's financial success and security and provide unbiased, ethical and personalized wealth management solutions."

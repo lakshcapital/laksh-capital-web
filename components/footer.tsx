@@ -1,37 +1,20 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Mail, Phone, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import footerSvg from "@/assets/footer.svg";
 import { SOCIALS } from "@/components/header";
 import { useScroll } from "@/hooks/use-scroll";
+import { REGULATORY } from "@/data/regulatory";
 
 const NAV_MENUS = [
-  {
-    href: "#about",
-    label: "About Us",
-  },
-  {
-    href: "#services",
-    label: "Services",
-  },
-  {
-    href: "#team",
-    label: "Our Team",
-  },
-  {
-    href: "#testimonials",
-    label: "Testimonials",
-  },
-  {
-    href: "#faq",
-    label: "FAQ",
-  },
-  {
-    href: "#contact",
-    label: "Contact",
-  },
+  { href: "#about", label: "About Us" },
+  { href: "#services", label: "Services" },
+  { href: "#team", label: "Our Team" },
+  { href: "#testimonials", label: "Testimonials" },
+  { href: "#faq", label: "FAQ" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const Footer = () => {
@@ -82,13 +65,82 @@ const Footer = () => {
           <p>
             Powered by{" "}
             <span className="font-medium text-white">
-              Niveshmitra Capital Services Private Limited
+              {REGULATORY.legalEntity}
             </span>
           </p>
           <p>
-            &copy; {new Date().getFullYear()} Laksh Capital. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} Laksh Capital. All rights reserved.
           </p>
+        </div>
+
+        <div className="container">
+          <div className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm p-6 md:p-8 text-white/90">
+            <div className="flex items-start gap-3 mb-5">
+              <ShieldCheck className="size-5 text-white shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wider text-white">
+                  Regulatory & Disclosures
+                </p>
+                <p className="mt-1 text-xs text-white/70">
+                  We operate under Indian financial advisory regulations.
+                </p>
+              </div>
+            </div>
+
+            <dl className="grid gap-y-3 gap-x-8 text-xs md:grid-cols-3">
+              <div>
+                <dt className="font-semibold text-white/95">AMFI ARN</dt>
+                <dd className="text-white/75 mt-0.5">
+                  {REGULATORY.amfiArn}
+                  {REGULATORY.arnValidFrom && (
+                    <span className="block text-white/55">
+                      Valid from {REGULATORY.arnValidFrom}
+                    </span>
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-white/95">Principal Officer</dt>
+                <dd className="text-white/75 mt-0.5">
+                  {REGULATORY.principalOfficer}
+                  {REGULATORY.euin && (
+                    <span className="block text-white/55">
+                      EUIN: {REGULATORY.euin}
+                    </span>
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-white/95">Grievance Officer</dt>
+                <dd className="text-white/75 mt-0.5 space-y-0.5">
+                  <span className="block">{REGULATORY.grievanceOfficer.name}</span>
+                  <Link
+                    href={`mailto:${REGULATORY.grievanceOfficer.email}`}
+                    className="flex items-center gap-1 hover:text-white"
+                  >
+                    <Mail className="size-3" />
+                    {REGULATORY.grievanceOfficer.email}
+                  </Link>
+                  <Link
+                    href={`tel:${REGULATORY.grievanceOfficer.phone}`}
+                    className="flex items-center gap-1 hover:text-white"
+                  >
+                    <Phone className="size-3" />
+                    {REGULATORY.grievanceOfficer.phone}
+                  </Link>
+                </dd>
+              </div>
+            </dl>
+
+            <div className="mt-5 pt-5 border-t border-white/15">
+              <p className="text-[11px] leading-relaxed text-white/65">
+                <span className="font-semibold text-white/85">
+                  Risk Disclaimer:
+                </span>{" "}
+                {REGULATORY.riskDisclaimer}
+              </p>
+            </div>
+          </div>
         </div>
 
         <Image
