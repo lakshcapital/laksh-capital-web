@@ -79,6 +79,37 @@ const renderSanityAnswer = (item: SanityFaqItem): JSX.Element => (
   </div>
 );
 
+interface PortableTextSpan {
+  _type: "span";
+  text?: string;
+}
+
+interface PortableTextBlockLike {
+  _type: string;
+  children?: PortableTextSpan[];
+  text?: string;
+  author?: string;
+}
+
+function portableTextToPlain(
+  blocks: SanityFaqItem["answer"] | undefined
+): string {
+  if (!blocks) return "";
+  return (blocks as unknown as PortableTextBlockLike[])
+    .map((block) => {
+      if (block._type === "block" && block.children) {
+        return block.children.map((c) => c.text || "").join("");
+      }
+      if (block._type === "quote") {
+        const txt = block.text || "";
+        return block.author ? `"${txt}" — ${block.author}` : `"${txt}"`;
+      }
+      return "";
+    })
+    .filter(Boolean)
+    .join("\n\n");
+}
+
 const FALLBACK_ITEMS: FaqRenderItem[] = [
   {
     id: "1",
@@ -302,8 +333,29 @@ const FAQ = async ({
       }))
     : FALLBACK_ITEMS;
 
+  const jsonLd = sanity.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: sanity.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: portableTextToPlain(item.answer),
+          },
+        })),
+      }
+    : null;
+
   return (
     <section id="faq" className={cn("py-16 md:py-24 lg:py-28", className)}>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
       <div className="container space-y-16">
         <div className="mx-auto max-w-4xl flex flex-col text-left md:text-center">
           <h2 className="mb-3 text-3xl font-semibold md:mb-4 lg:mb-6 lg:text-6xl">

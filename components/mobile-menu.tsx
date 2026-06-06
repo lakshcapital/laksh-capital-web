@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
+import { CalendarClock } from "lucide-react";
 import logoImg from "@/assets/logo.svg";
 import { useLenis } from "lenis/react";
 import { useScroll } from "@/hooks/use-scroll";
+import { Button } from "@/components/ui/button";
 
 interface NavMenu {
   label: string;
@@ -21,8 +23,11 @@ interface Social {
 interface MobileMenuProps {
   navMenus: NavMenu[];
   socials: Social[];
+  calendlyUrl?: string;
 }
-const MobileMenu = ({ navMenus, socials }: MobileMenuProps) => {
+const MobileMenu = ({ navMenus, socials, calendlyUrl }: MobileMenuProps) => {
+  const ctaHref = calendlyUrl || "mailto:info@lakshcapital.in";
+  const isExternal = !!calendlyUrl;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const scrollTo = useScroll();
   const lenis = useLenis();
@@ -80,22 +85,35 @@ const MobileMenu = ({ navMenus, socials }: MobileMenuProps) => {
             ))}
           </ul>
         </nav>
-        <div>
-          <p className="text-muted-foreground text-md mb-4">Get in touch</p>
-          <ul className="flex items-center gap-4 overflow-hidden">
-            {socials.map((social, i) => (
-              <li key={i}>
-                <Link
-                  href={social.href}
-                  target="_blank"
-                  referrerPolicy="no-referrer"
-                >
-                  {social.icon}
-                  <span className="sr-only">{social.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <div className="space-y-6">
+          <Button asChild size="lg" className="w-full font-semibold">
+            <a
+              href={ctaHref}
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              onClick={() => setIsMenuVisible(false)}
+            >
+              <CalendarClock className="size-4" />
+              Book a Call
+            </a>
+          </Button>
+          <div>
+            <p className="text-muted-foreground text-md mb-4">Get in touch</p>
+            <ul className="flex items-center gap-4 overflow-hidden">
+              {socials.map((social, i) => (
+                <li key={i}>
+                  <Link
+                    href={social.href}
+                    target="_blank"
+                    referrerPolicy="no-referrer"
+                  >
+                    {social.icon}
+                    <span className="sr-only">{social.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ export default function BlogLayout({
 }) {
   return (
     <>
-      <Header />
+      <Header calendlyUrl={process.env.NEXT_APP_CALENDLY_URL} />
       {children}
       <Footer />
     </>
