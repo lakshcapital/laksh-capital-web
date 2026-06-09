@@ -1,8 +1,10 @@
 import { ImageResponse } from "next/og";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { TRUST_STATS } from "@/data/trust";
 
-export const runtime = "edge";
-export const alt = "Laksh Capital — Trusted Wealth Management";
+export const runtime = "nodejs";
+export const alt = "Laksh Capital — Beyond Today, Building Tomorrow";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -14,6 +16,14 @@ const BRAND = {
   green: "#459250",
   greenLight: "#5BAF66",
 };
+
+const logoSvg = readFileSync(
+  path.join(process.cwd(), "assets/logo.svg"),
+  "utf-8"
+);
+const logoDataUri = `data:image/svg+xml;base64,${Buffer.from(logoSvg).toString(
+  "base64"
+)}`;
 
 export default async function Image() {
   const yearsActive = new Date().getFullYear() - TRUST_STATS.yearFounded;
@@ -29,7 +39,7 @@ export default async function Image() {
           justifyContent: "space-between",
           background: `linear-gradient(135deg, ${BRAND.blueDark} 0%, ${BRAND.blueMid} 60%, ${BRAND.blueLight} 100%)`,
           color: "#ffffff",
-          padding: "72px 80px",
+          padding: "60px 80px",
           fontFamily: "sans-serif",
           position: "relative",
         }}
@@ -55,76 +65,63 @@ export default async function Image() {
           }}
         />
 
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
-              background: `linear-gradient(135deg, ${BRAND.blueLight} 0%, ${BRAND.green} 100%)`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#ffffff",
-              fontSize: 30,
-              fontWeight: 700,
-              boxShadow: "0 6px 24px rgba(0,0,0,0.18)",
-            }}
-          >
-            LC
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: 28, fontWeight: 600, lineHeight: 1 }}>
-              Laksh Capital
-            </span>
-            <span
-              style={{
-                fontSize: 16,
-                color: "rgba(255,255,255,0.65)",
-                marginTop: 4,
-                letterSpacing: 2,
-                textTransform: "uppercase",
-              }}
-            >
-              Wealth Management
-            </span>
-          </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            background: "#ffffff",
+            padding: "16px 28px",
+            borderRadius: 14,
+            alignSelf: "flex-start",
+            boxShadow: "0 12px 32px rgba(0,0,0,0.18)",
+          }}
+        >
+          <img
+            src={logoDataUri}
+            width={260}
+            height={60}
+            alt="Laksh Capital"
+            style={{ objectFit: "contain" }}
+          />
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <span
             style={{
               fontSize: 18,
               color: BRAND.greenLight,
               letterSpacing: 4,
               textTransform: "uppercase",
-              fontWeight: 600,
+              fontWeight: 700,
             }}
           >
-            Independent · Patient · Personal
+            Independent wealth advisory
           </span>
           <h1
             style={{
-              fontSize: 80,
+              fontSize: 84,
               fontWeight: 600,
-              lineHeight: 1.05,
+              lineHeight: 1.02,
               margin: 0,
-              maxWidth: 900,
+              maxWidth: 950,
+              letterSpacing: -1,
             }}
           >
-            Patient capital for the next generation.
+            Beyond today,
+            <br />
+            <span style={{ color: BRAND.greenLight }}>building tomorrow.</span>
           </h1>
           <p
             style={{
-              fontSize: 28,
-              color: "rgba(255,255,255,0.8)",
+              fontSize: 26,
+              color: "rgba(255,255,255,0.82)",
               margin: 0,
               maxWidth: 820,
-              lineHeight: 1.3,
+              lineHeight: 1.35,
             }}
           >
-            Independent wealth advisory for business owners, professionals, and
-            NRIs.
+            Patient capital for the next generation of business owners,
+            professionals, and NRIs.
           </p>
         </div>
 
@@ -147,9 +144,7 @@ export default async function Image() {
               label={`Since ${TRUST_STATS.yearFounded}`}
             />
           </div>
-          <span
-            style={{ fontSize: 20, color: "rgba(255,255,255,0.75)" }}
-          >
+          <span style={{ fontSize: 20, color: "rgba(255,255,255,0.75)" }}>
             lakshcapital.in
           </span>
         </div>
