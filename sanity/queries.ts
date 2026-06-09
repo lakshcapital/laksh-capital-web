@@ -2,6 +2,7 @@ import { client } from "./client";
 import {
   Author,
   Category,
+  ContactSettings,
   FaqItem,
   Post,
   PostCard,
@@ -171,6 +172,20 @@ export async function getAllFaqItems(): Promise<FaqItem[]> {
   return client.fetch(
     `*[_type == "faqItem"] | order(coalesce(order, 999) asc, _createdAt asc) {
       _id, question, answer, order
+    }`
+  );
+}
+
+export async function getContactSettings(): Promise<ContactSettings | null> {
+  return client.fetch(
+    `*[_type == "contactSettings"] | order(_updatedAt desc) [0] {
+      _id,
+      interestOptions,
+      portfolioOptions,
+      goalOptions,
+      preferredContactMethods,
+      riskAcknowledgement,
+      replyMicrocopy
     }`
   );
 }

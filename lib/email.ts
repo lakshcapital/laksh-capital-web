@@ -11,7 +11,7 @@ const config = {
     address: process.env.EMAIL_FROM_ADDRESS || "",
   },
   to: process.env.EMAIL_TO || "",
-  subject: "Laksh Capital - Contact Form Received",
+  subject: "Laksh Capital — New website enquiry",
   htmlTemplate: contactTemplate,
 };
 
@@ -24,23 +24,50 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendEmail(
-  name: string,
-  email: string,
-  subject: string,
-  message: string
-): Promise<boolean> {
+interface EnquiryPayload {
+  name: string;
+  email: string;
+  phone: string;
+  interest: string;
+  portfolio: string;
+  goal: string;
+  preferredContact: string;
+  message: string;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+export async function sendEmail(payload: EnquiryPayload): Promise<boolean> {
   try {
+    const fields: Record<string, string> = {
+      name: payload.name,
+      email: payload.email,
+      phone: payload.phone || "—",
+      interest: payload.interest,
+      portfolio: payload.portfolio,
+      goal: payload.goal,
+      preferredContact: payload.preferredContact || "—",
+      message: payload.message,
+      date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+    };
+
+    let html = config.htmlTemplate;
+    for (const [key, value] of Object.entries(fields)) {
+      html = html.replaceAll(`{{${key}}}`, escapeHtml(value));
+    }
+
     const mailOptions = {
       from: config.from,
       to: config.to,
       subject: config.subject,
-      html: config.htmlTemplate
-        .replace("{{name}}", name)
-        .replace("{{email}}", email)
-        .replace("{{subject}}", subject)
-        .replace("{{message}}", message)
-        .replace("{{date}}", new Date().toLocaleString()),
+      html,
     };
 
     const info = await transporter.sendMail(mailOptions);

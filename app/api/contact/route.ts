@@ -3,8 +3,50 @@ import { sendEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, subject, message } = await req.json();
-    const sent = await sendEmail(name, email, subject, message);
+    const body = await req.json();
+    const {
+      firstname,
+      lastname,
+      email,
+      phone,
+      interest,
+      portfolio,
+      goal,
+      preferredContact,
+      message,
+      riskAck,
+    } = body;
+
+    if (!firstname || !email || !interest || !portfolio || !goal || !message) {
+      return NextResponse.json(
+        { success: false, message: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    if (!riskAck) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Please acknowledge the risk disclaimer to proceed.",
+        },
+        { status: 400 }
+      );
+    }
+
+    const name = `${firstname} ${lastname || ""}`.trim();
+
+    const sent = await sendEmail({
+      name,
+      email,
+      phone: phone || "",
+      interest,
+      portfolio,
+      goal,
+      preferredContact: preferredContact || "",
+      message,
+    });
+
     if (sent) {
       return NextResponse.json({
         success: true,

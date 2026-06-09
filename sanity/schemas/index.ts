@@ -5,6 +5,7 @@ import category from "./category";
 import testimonial from "./testimonial";
 import teamMember from "./teamMember";
 import faqItem from "./faqItem";
+import contactSettings from "./contactSettings";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   post,
@@ -13,4 +14,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   testimonial,
   teamMember,
   faqItem,
+  contactSettings,
 ];

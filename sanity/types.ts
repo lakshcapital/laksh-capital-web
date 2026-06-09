@@ -71,3 +71,13 @@ export interface FaqItem {
   answer: PortableTextBlock[];
   order?: number;
 }
+
+export interface ContactSettings {
+  _id: string;
+  interestOptions?: string[];
+  portfolioOptions?: string[];
+  goalOptions?: string[];
+  preferredContactMethods?: string[];
+  riskAcknowledgement?: string;
+  replyMicrocopy?: string;
+}
