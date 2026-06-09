@@ -199,44 +199,46 @@ const ContactForm = ({
               </div>
             </div>
 
-            <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="interest">How can we help? *</Label>
-              <select
-                id="interest"
-                name="interest"
-                required
-                defaultValue=""
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              >
-                <option value="" disabled>
-                  Select an option
-                </option>
-                {settings.interestOptions.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="interest">How can we help? *</Label>
+                <select
+                  id="interest"
+                  name="interest"
+                  required
+                  defaultValue=""
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <option value="" disabled>
+                    Select an option
                   </option>
-                ))}
-              </select>
-            </div>
+                  {settings.interestOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="portfolio">Current portfolio size *</Label>
-              <select
-                id="portfolio"
-                name="portfolio"
-                required
-                defaultValue=""
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              >
-                <option value="" disabled>
-                  Select a range
-                </option>
-                {settings.portfolioOptions.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="portfolio">Current portfolio size *</Label>
+                <select
+                  id="portfolio"
+                  name="portfolio"
+                  required
+                  defaultValue=""
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <option value="" disabled>
+                    Select a range
                   </option>
-                ))}
-              </select>
+                  {settings.portfolioOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             <div className="grid w-full items-center gap-1.5">
