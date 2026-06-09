@@ -175,34 +175,6 @@ const ContactForm = ({
               </div>
             )}
 
-            <fieldset className="grid w-full items-center gap-2 rounded-lg border border-dashed border-border bg-muted/30 p-4">
-              <legend className="px-2 text-sm font-medium">
-                How would you like us to reach you? *
-              </legend>
-              <div className="flex flex-wrap gap-4">
-                {settings.preferredContactMethods.map((method) => (
-                  <label
-                    key={method}
-                    className="flex items-center gap-2 text-sm cursor-pointer"
-                  >
-                    <input
-                      type="radio"
-                      name="preferredContact"
-                      value={method}
-                      required
-                      checked={preferredMethod === method}
-                      onChange={(e) => setPreferredMethod(e.target.value)}
-                      className="size-4 accent-primary"
-                    />
-                    {method}
-                  </label>
-                ))}
-              </div>
-              <p className="px-2 text-xs text-muted-foreground">
-                We&apos;ll mark the matching field below as required.
-              </p>
-            </fieldset>
-
             <div className="flex flex-col gap-4 sm:flex-row">
               <div className="grid w-full items-center gap-1.5">
                 <Label htmlFor="firstname">First Name *</Label>
@@ -223,35 +195,6 @@ const ContactForm = ({
                   name="lastname"
                   autoComplete="family-name"
                   placeholder="Last name"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="email">
-                  Email {emailRequired ? "*" : <span className="text-muted-foreground">(optional)</span>}
-                </Label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required={emailRequired}
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                />
-              </div>
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="phone">
-                  Phone {phoneRequired ? "*" : <span className="text-muted-foreground">(optional)</span>}
-                </Label>
-                <Input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  required={phoneRequired}
-                  autoComplete="tel"
-                  placeholder="+91 98765 43210"
                 />
               </div>
             </div>
@@ -314,6 +257,60 @@ const ContactForm = ({
                   </option>
                 ))}
               </select>
+            </div>
+
+            <fieldset className="grid w-full items-center gap-2 rounded-lg border border-dashed border-border bg-muted/30 p-4">
+              <legend className="px-2 text-sm font-medium">
+                How would you like us to reach you? *
+              </legend>
+              <div className="flex flex-wrap gap-4">
+                {settings.preferredContactMethods.map((method) => (
+                  <label
+                    key={method}
+                    className="flex items-center gap-2 text-sm cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="preferredContact"
+                      value={method}
+                      required
+                      checked={preferredMethod === method}
+                      onChange={(e) => setPreferredMethod(e.target.value)}
+                      className="size-4 accent-primary"
+                    />
+                    {method}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="email">
+                  Email {emailRequired ? "*" : <span className="text-muted-foreground">(optional)</span>}
+                </Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required={emailRequired}
+                  autoComplete="email"
+                  placeholder="you@example.com"
+                />
+              </div>
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="phone">
+                  Phone {phoneRequired ? "*" : <span className="text-muted-foreground">(optional)</span>}
+                </Label>
+                <Input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required={phoneRequired}
+                  autoComplete="tel"
+                  placeholder="+91 98765 43210"
+                />
+              </div>
             </div>
 
             <div className="grid w-full gap-1.5">
