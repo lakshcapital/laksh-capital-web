@@ -6,6 +6,15 @@ export const alt = "Laksh Capital — Trusted Wealth Management";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Pulled from /assets/logo.svg — keep these in sync if the logo is rebranded.
+const BRAND = {
+  blueDark: "#2D4A9B",
+  blueMid: "#324E9D",
+  blueLight: "#36519F",
+  green: "#459250",
+  greenLight: "#5BAF66",
+};
+
 export default async function Image() {
   const yearsActive = new Date().getFullYear() - TRUST_STATS.yearFounded;
 
@@ -18,8 +27,7 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background:
-            "linear-gradient(135deg, #0F2A4A 0%, #0F2A4A 60%, #091B30 100%)",
+          background: `linear-gradient(135deg, ${BRAND.blueDark} 0%, ${BRAND.blueMid} 60%, ${BRAND.blueLight} 100%)`,
           color: "#ffffff",
           padding: "72px 80px",
           fontFamily: "sans-serif",
@@ -29,12 +37,21 @@ export default async function Image() {
         <div
           style={{
             position: "absolute",
-            top: 0,
-            right: 0,
-            width: 540,
-            height: 540,
-            background:
-              "radial-gradient(circle at top right, rgba(201,169,97,0.18) 0%, rgba(201,169,97,0) 60%)",
+            bottom: -120,
+            right: -120,
+            width: 640,
+            height: 640,
+            background: `radial-gradient(circle at center, ${BRAND.green}66 0%, ${BRAND.green}00 60%)`,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: -160,
+            left: -160,
+            width: 520,
+            height: 520,
+            background: `radial-gradient(circle at center, ${BRAND.blueLight}80 0%, ${BRAND.blueLight}00 65%)`,
           }}
         />
 
@@ -44,14 +61,14 @@ export default async function Image() {
               width: 56,
               height: 56,
               borderRadius: 14,
-              background:
-                "linear-gradient(135deg, #C9A961 0%, #FBE8B6 100%)",
+              background: `linear-gradient(135deg, ${BRAND.blueLight} 0%, ${BRAND.green} 100%)`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#0F2A4A",
+              color: "#ffffff",
               fontSize: 30,
               fontWeight: 700,
+              boxShadow: "0 6px 24px rgba(0,0,0,0.18)",
             }}
           >
             LC
@@ -78,7 +95,7 @@ export default async function Image() {
           <span
             style={{
               fontSize: 18,
-              color: "#C9A961",
+              color: BRAND.greenLight,
               letterSpacing: 4,
               textTransform: "uppercase",
               fontWeight: 600,
@@ -100,7 +117,7 @@ export default async function Image() {
           <p
             style={{
               fontSize: 28,
-              color: "rgba(255,255,255,0.75)",
+              color: "rgba(255,255,255,0.8)",
               margin: 0,
               maxWidth: 820,
               lineHeight: 1.3,
@@ -117,7 +134,7 @@ export default async function Image() {
             alignItems: "center",
             justifyContent: "space-between",
             paddingTop: 24,
-            borderTop: "1px solid rgba(255,255,255,0.15)",
+            borderTop: "1px solid rgba(255,255,255,0.18)",
           }}
         >
           <div style={{ display: "flex", gap: 40, alignItems: "center" }}>
@@ -131,7 +148,7 @@ export default async function Image() {
             />
           </div>
           <span
-            style={{ fontSize: 20, color: "rgba(255,255,255,0.65)" }}
+            style={{ fontSize: 20, color: "rgba(255,255,255,0.75)" }}
           >
             lakshcapital.in
           </span>
@@ -151,7 +168,7 @@ function Stat({ value, label }: { value: string; label: string }) {
       <span
         style={{
           fontSize: 14,
-          color: "rgba(255,255,255,0.55)",
+          color: "rgba(255,255,255,0.65)",
           marginTop: 2,
         }}
       >
@@ -167,7 +184,7 @@ function Divider() {
       style={{
         width: 1,
         height: 32,
-        background: "rgba(255,255,255,0.15)",
+        background: "rgba(255,255,255,0.2)",
       }}
     />
   );
