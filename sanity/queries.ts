@@ -182,10 +182,7 @@ export async function getContactSettings(): Promise<ContactSettings | null> {
       _id,
       interestOptions,
       portfolioOptions,
-      goalOptions,
-      preferredContactMethods,
-      riskAcknowledgement,
-      replyMicrocopy
+      goalOptions
     }`
   );
 }

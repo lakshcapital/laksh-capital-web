@@ -77,7 +77,4 @@ export interface ContactSettings {
   interestOptions?: string[];
   portfolioOptions?: string[];
   goalOptions?: string[];
-  preferredContactMethods?: string[];
-  riskAcknowledgement?: string;
-  replyMicrocopy?: string;
 }

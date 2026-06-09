@@ -48,23 +48,20 @@ const DOC = {
     "Estate / legacy planning",
     "Just exploring",
   ],
-  preferredContactMethods: ["Email", "Phone call", "WhatsApp"],
-  riskAcknowledgement:
-    "I understand that mutual fund and securities investments are subject to market risks, and that past performance does not guarantee future returns.",
-  replyMicrocopy: "We'll get back to you shortly.",
 };
 
 async function run() {
-  const existingId = await client.fetch(
-    `*[_type == "contactSettings"][0]._id`
+  const existing = await client.fetch(
+    `*[_type == "contactSettings"]{ _id }`
   );
-  if (existingId) {
-    console.log(`↷ Skipping — contactSettings already exists (${existingId})`);
-    return;
+
+  for (const doc of existing) {
+    await client.delete(doc._id);
+    console.log(`  ✗ Deleted old contactSettings (${doc._id})`);
   }
 
   const created = await client.create(DOC);
-  console.log(`✓ Created contactSettings (${created._id})`);
+  console.log(`  ✓ Created contactSettings (${created._id})`);
 }
 
 run().catch((err) => {

@@ -18,14 +18,9 @@ export default async function Contact() {
       sanity?.goalOptions?.length
         ? sanity.goalOptions
         : CONTACT_DEFAULTS.goalOptions,
-    preferredContactMethods:
-      sanity?.preferredContactMethods?.length
-        ? sanity.preferredContactMethods
-        : CONTACT_DEFAULTS.preferredContactMethods,
-    riskAcknowledgement:
-      sanity?.riskAcknowledgement || CONTACT_DEFAULTS.riskAcknowledgement,
-    replyMicrocopy:
-      sanity?.replyMicrocopy || CONTACT_DEFAULTS.replyMicrocopy,
+    preferredContactMethods: CONTACT_DEFAULTS.preferredContactMethods,
+    riskAcknowledgement: CONTACT_DEFAULTS.riskAcknowledgement,
+    replyMicrocopy: CONTACT_DEFAULTS.replyMicrocopy,
   };
 
   return <ContactForm settings={settings} />;
