@@ -85,7 +85,7 @@ export default async function Image() {
           />
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <span
             style={{
               fontSize: 18,
@@ -99,21 +99,20 @@ export default async function Image() {
           </span>
           <h1
             style={{
-              fontSize: 84,
+              fontSize: 64,
               fontWeight: 600,
-              lineHeight: 1.02,
+              lineHeight: 1.15,
               margin: 0,
-              maxWidth: 950,
-              letterSpacing: -1,
+              display: "flex",
+              flexDirection: "column",
             }}
           >
-            Beyond today,
-            <br />
+            <span>Beyond today,</span>
             <span style={{ color: BRAND.greenLight }}>building tomorrow.</span>
           </h1>
           <p
             style={{
-              fontSize: 26,
+              fontSize: 24,
               color: "rgba(255,255,255,0.82)",
               margin: 0,
               maxWidth: 820,
@@ -128,24 +127,44 @@ export default async function Image() {
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingTop: 24,
+            flexDirection: "column",
+            gap: 14,
+            paddingTop: 22,
             borderTop: "1px solid rgba(255,255,255,0.18)",
           }}
         >
-          <div style={{ display: "flex", gap: 40, alignItems: "center" }}>
-            <Stat value={TRUST_STATS.aum} label="Assets Under Advice" />
-            <Divider />
-            <Stat value={TRUST_STATS.familiesServed} label="Families served" />
-            <Divider />
-            <Stat
-              value={`${yearsActive}+ yrs`}
-              label={`Since ${TRUST_STATS.yearFounded}`}
-            />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", gap: 40, alignItems: "center" }}>
+              <Stat value={TRUST_STATS.aum} label="Assets Under Advice" />
+              <Divider />
+              <Stat
+                value={TRUST_STATS.familiesServed}
+                label="Families served"
+              />
+              <Divider />
+              <Stat
+                value={`${yearsActive}+ yrs`}
+                label={`Since ${TRUST_STATS.yearFounded}`}
+              />
+            </div>
+            <span style={{ fontSize: 20, color: "rgba(255,255,255,0.75)" }}>
+              lakshcapital.in
+            </span>
           </div>
-          <span style={{ fontSize: 20, color: "rgba(255,255,255,0.75)" }}>
-            lakshcapital.in
+          <span
+            style={{
+              fontSize: 13,
+              color: "rgba(255,255,255,0.55)",
+              letterSpacing: 0.5,
+            }}
+          >
+            Powered by Niveshmitra Capital Services Private Limited
           </span>
         </div>
       </div>
