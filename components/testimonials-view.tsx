@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "./ui/card";
 import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
 import Masonry from "react-masonry-css";
 import AutoScroll from "embla-carousel-auto-scroll";
+import Monogram from "./monogram";
 
 export interface TestimonialItem {
   name: string;
@@ -23,7 +24,7 @@ const TestimonialCard = ({
   designation,
   company,
   message,
-  avatarSrc = "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar-1.webp",
+  avatarSrc,
 }: TestimonialCardProps) => {
   return (
     <Card className="py-6 shadow-sm max-w-md">
@@ -31,20 +32,24 @@ const TestimonialCard = ({
         <q>{message}</q>
       </CardContent>
       <CardFooter className="[.border-t]:pt-6">
-        <div className="flex gap-4 leading-5 tracking-wide">
-          <span
-            data-slot="avatar"
-            className="relative flex shrink-0 overflow-hidden size-9 rounded-full ring-1 ring-input"
-          >
-            <Image
-              width={80}
-              height={80}
-              data-slot="avatar-image"
-              className="aspect-square size-full"
-              alt={name}
-              src={avatarSrc}
-            />
-          </span>
+        <div className="flex gap-4 leading-5 tracking-wide items-center">
+          {avatarSrc ? (
+            <span
+              data-slot="avatar"
+              className="relative flex shrink-0 overflow-hidden size-9 rounded-full ring-1 ring-input"
+            >
+              <Image
+                width={80}
+                height={80}
+                data-slot="avatar-image"
+                className="aspect-square size-full"
+                alt={name}
+                src={avatarSrc}
+              />
+            </span>
+          ) : (
+            <Monogram name={name} size={36} />
+          )}
           <div className="text-sm">
             <p className="font-medium">{name}</p>
             <p className="text-muted-foreground">{designation}</p>

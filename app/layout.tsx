@@ -35,14 +35,6 @@ export const metadata: Metadata = {
       "Expert-led wealth management and investment solutions focused on long-term growth and clarity.",
     url: "https://www.lakshcapital.in",
     siteName: "Laksh Capital",
-    images: [
-      {
-        url: "https://www.lakshcapital.in/og-image.png",
-        width: 1200,
-        height: 628,
-        alt: "Laksh Capital Wealth Management",
-      },
-    ],
     locale: "en_IN",
     type: "website",
   },
@@ -51,7 +43,6 @@ export const metadata: Metadata = {
     title: "Laksh Capital | Trusted Wealth Management Firm",
     description:
       "Personalized wealth management and investment solutions built for long-term wealth creation.",
-    images: ["https://www.lakshcapital.in/og-image.png"],
   },
 };
 
