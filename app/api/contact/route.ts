@@ -17,9 +17,31 @@ export async function POST(req: Request) {
       riskAck,
     } = body;
 
-    if (!firstname || !email || !interest || !portfolio || !goal || !message) {
+    if (!firstname || !interest || !portfolio || !goal || !message || !preferredContact) {
       return NextResponse.json(
         { success: false, message: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    const usesEmail = String(preferredContact).toLowerCase().includes("email");
+
+    if (usesEmail && !email) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Email is required when Email is your preferred contact.",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (!usesEmail && !phone) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Phone is required when ${preferredContact} is your preferred contact.`,
+        },
         { status: 400 }
       );
     }

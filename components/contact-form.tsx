@@ -38,6 +38,9 @@ interface ContactFormProps {
 
 type Status = "idle" | "sending" | "success" | "error";
 
+const methodUsesEmail = (method: string) =>
+  method.toLowerCase().includes("email");
+
 const ContactForm = ({
   title = "Contact Us",
   description = "We are available for questions, feedback, or collaboration opportunities. Let us know how we can help!",
@@ -57,6 +60,12 @@ const ContactForm = ({
 }: ContactFormProps) => {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [preferredMethod, setPreferredMethod] = useState<string>(
+    settings.preferredContactMethods[0] || ""
+  );
+
+  const emailRequired = methodUsesEmail(preferredMethod);
+  const phoneRequired = !emailRequired;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,8 +78,8 @@ const ContactForm = ({
     const payload = {
       firstname: formData.get("firstname") as string,
       lastname: formData.get("lastname") as string,
-      email: formData.get("email") as string,
-      phone: (formData.get("phone") as string) || "",
+      email: ((formData.get("email") as string) || "").trim(),
+      phone: ((formData.get("phone") as string) || "").trim(),
       interest: formData.get("interest") as string,
       portfolio: formData.get("portfolio") as string,
       goal: formData.get("goal") as string,
@@ -89,6 +98,7 @@ const ContactForm = ({
       if (res.ok) {
         setStatus("success");
         form.reset();
+        setPreferredMethod(settings.preferredContactMethods[0] || "");
       } else {
         const data = await res.json().catch(() => ({}));
         setErrorMessage(data?.message || "Something went wrong.");
@@ -165,6 +175,34 @@ const ContactForm = ({
               </div>
             )}
 
+            <fieldset className="grid w-full items-center gap-2 rounded-lg border border-dashed border-border bg-muted/30 p-4">
+              <legend className="px-2 text-sm font-medium">
+                How would you like us to reach you? *
+              </legend>
+              <div className="flex flex-wrap gap-4">
+                {settings.preferredContactMethods.map((method) => (
+                  <label
+                    key={method}
+                    className="flex items-center gap-2 text-sm cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="preferredContact"
+                      value={method}
+                      required
+                      checked={preferredMethod === method}
+                      onChange={(e) => setPreferredMethod(e.target.value)}
+                      className="size-4 accent-primary"
+                    />
+                    {method}
+                  </label>
+                ))}
+              </div>
+              <p className="px-2 text-xs text-muted-foreground">
+                We&apos;ll mark the matching field below as required.
+              </p>
+            </fieldset>
+
             <div className="flex flex-col gap-4 sm:flex-row">
               <div className="grid w-full items-center gap-1.5">
                 <Label htmlFor="firstname">First Name *</Label>
@@ -191,22 +229,27 @@ const ContactForm = ({
 
             <div className="flex flex-col gap-4 sm:flex-row">
               <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email">
+                  Email {emailRequired ? "*" : <span className="text-muted-foreground">(optional)</span>}
+                </Label>
                 <Input
                   type="email"
                   id="email"
                   name="email"
-                  required
+                  required={emailRequired}
                   autoComplete="email"
                   placeholder="you@example.com"
                 />
               </div>
               <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="phone">Phone</Label>
+                <Label htmlFor="phone">
+                  Phone {phoneRequired ? "*" : <span className="text-muted-foreground">(optional)</span>}
+                </Label>
                 <Input
                   type="tel"
                   id="phone"
                   name="phone"
+                  required={phoneRequired}
                   autoComplete="tel"
                   placeholder="+91 98765 43210"
                 />
@@ -272,30 +315,6 @@ const ContactForm = ({
                 ))}
               </select>
             </div>
-
-            <fieldset className="grid w-full items-center gap-2">
-              <legend className="text-sm font-medium">
-                Preferred contact method *
-              </legend>
-              <div className="flex flex-wrap gap-4">
-                {settings.preferredContactMethods.map((method, i) => (
-                  <label
-                    key={method}
-                    className="flex items-center gap-2 text-sm"
-                  >
-                    <input
-                      type="radio"
-                      name="preferredContact"
-                      value={method}
-                      required
-                      defaultChecked={i === 0}
-                      className="size-4 accent-primary"
-                    />
-                    {method}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
 
             <div className="grid w-full gap-1.5">
               <Label htmlFor="message">Message *</Label>
