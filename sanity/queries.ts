@@ -190,7 +190,7 @@ export async function getAllFaqItems(): Promise<FaqItem[]> {
 export async function getHeroSettings(): Promise<HeroSettings | null> {
   return client.fetch(
     `*[_type == "heroSettings"] | order(_updatedAt desc) [0] {
-      _id, badge, heading, description, buttonText
+      _id, badge, heading, rotatingHeadlines, description, buttonText
     }`
   );
 }

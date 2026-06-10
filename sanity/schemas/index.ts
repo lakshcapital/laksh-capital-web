@@ -9,6 +9,7 @@ import contactSettings from "./contactSettings";
 import service from "./service";
 import heroSettings from "./heroSettings";
 import aboutSettings from "./aboutSettings";
+import newsletterSubscriber from "./newsletterSubscriber";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   heroSettings,
@@ -21,4 +22,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   teamMember,
   faqItem,
   contactSettings,
+  newsletterSubscriber,
 ];

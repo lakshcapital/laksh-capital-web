@@ -11,10 +11,13 @@ import ScrollToTop from "@/components/scroll-to-top";
 import LatestBlogs from "@/components/latest-blogs";
 import TrustStrip from "@/components/trust-strip";
 import HashScroller from "@/components/hash-scroller";
+import WelcomePreloader from "@/components/welcome-preloader";
+import WhatsAppButton from "@/components/whatsapp-button";
 
 export default function Home() {
   return (
     <>
+      <WelcomePreloader />
       <ScrollToTop />
       <HashScroller />
       <div className="hero__bg h-full w-full absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_33%,rgba(0,255,235,0.075)_0%,hsla(0,0%,100%,0)_25%),radial-gradient(circle_at_12%_35%,rgba(108,99,255,0.15)_0%,hsla(0,0%,100%,0)_25%)]"></div>
@@ -34,6 +37,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <WhatsAppButton />
     </>
   );
 }

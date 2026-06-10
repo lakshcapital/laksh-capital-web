@@ -9,6 +9,7 @@ import { SOCIALS } from "@/components/header";
 import { useScroll } from "@/hooks/use-scroll";
 import { REGULATORY } from "@/data/regulatory";
 import { NAV_MENUS } from "@/data/nav";
+import NewsletterForm from "@/components/newsletter-form";
 
 const Footer = () => {
   const scrollTo = useScroll();
@@ -24,6 +25,12 @@ const Footer = () => {
       className="text-white relative bg-linear-to-b via-50% from-primary to-emerald-600 pt-16 md:pt-28 lg:pt-32"
     >
       <div className="flex flex-col items-center gap-14">
+        <div className="container">
+          <div className="mx-auto max-w-2xl rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm md:p-8">
+            <NewsletterForm source="footer" variant="dark" />
+          </div>
+        </div>
+
         <nav className="container flex flex-col items-center gap-4">
           <ul className="flex flex-wrap items-center justify-center gap-6 text-lg">
             {NAV_MENUS.map((menu, i) => (

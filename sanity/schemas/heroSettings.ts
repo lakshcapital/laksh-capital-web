@@ -20,6 +20,15 @@ export default defineType({
       validation: (Rule) => Rule.required().max(120),
     }),
     defineField({
+      name: "rotatingHeadlines",
+      title: "Rotating headlines (optional)",
+      type: "array",
+      of: [{ type: "string" }],
+      description:
+        "If set with 2+ entries, these cycle in place of the static headline. Leave empty to use the static headline.",
+      validation: (Rule) => Rule.max(5),
+    }),
+    defineField({
       name: "description",
       title: "Description",
       type: "text",

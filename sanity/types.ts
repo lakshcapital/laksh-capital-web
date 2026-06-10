@@ -92,6 +92,7 @@ export interface HeroSettings {
   _id: string;
   badge?: string;
   heading?: string;
+  rotatingHeadlines?: string[];
   description?: string;
   buttonText?: string;
 }

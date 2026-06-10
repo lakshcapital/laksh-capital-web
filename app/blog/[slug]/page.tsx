@@ -8,6 +8,7 @@ import { urlFor } from "@/sanity/image";
 import { Badge } from "@/components/ui/badge";
 import BlogCard from "@/components/blog-card";
 import PortableTextRenderer from "@/components/portable-text";
+import NewsletterForm from "@/components/newsletter-form";
 
 export const revalidate = 60;
 
@@ -131,6 +132,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="prose-custom">
           <PortableTextRenderer value={post.body} />
+        </div>
+
+        <div className="mt-12 rounded-2xl border bg-muted/40 p-6 md:p-8">
+          <NewsletterForm source="blog" variant="light" />
         </div>
 
         {post.relatedPosts && post.relatedPosts.length > 0 && (

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight, Zap } from "lucide-react";
 import Logos from "./logos";
 import HeroIllustration from "./hero-illustration";
+import HeroHeadline from "./hero-headline";
 import { getHeroSettings } from "@/sanity/queries";
 import { HERO_DEFAULTS } from "@/data/hero-defaults";
 
@@ -16,6 +17,7 @@ export default async function Hero({ calendlyUrl, className }: HeroProps) {
   const sanity = await getHeroSettings();
   const badge = sanity?.badge ?? HERO_DEFAULTS.badge;
   const heading = sanity?.heading || HERO_DEFAULTS.heading;
+  const rotating = sanity?.rotatingHeadlines || [];
   const description = sanity?.description || HERO_DEFAULTS.description;
   const buttonText = sanity?.buttonText || HERO_DEFAULTS.buttonText;
   const ctaHref = calendlyUrl || "#contact";
@@ -37,9 +39,7 @@ export default async function Hero({ calendlyUrl, className }: HeroProps) {
                 <ArrowUpRight className="ml-2 size-4" />
               </Badge>
             )}
-            <h1 className="my-6 text-3xl font-semibold text-pretty lg:text-6xl">
-              {heading}
-            </h1>
+            <HeroHeadline staticHeading={heading} rotating={rotating} />
             <p className="mb-8 max-w-xl text-muted-foreground lg:text-lg">
               {description}
             </p>
