@@ -14,39 +14,69 @@ export default function HashScroller() {
     if (!hash || hash.length < 2) return;
 
     const width = window.innerWidth;
-    const offset = width < 640 ? 32 : width < 1024 ? 48 : 56;
+    const offset = width < 640 ? 64 : width < 1024 ? 72 : 84;
 
     let cancelled = false;
     let attempts = 0;
     const maxAttempts = 30;
 
-    const tryScroll = () => {
+    const performScroll = (smooth: boolean) => {
       if (cancelled) return;
       const target = document.querySelector(hash);
-      if (!target) {
-        if (attempts < maxAttempts) {
-          attempts += 1;
-          window.setTimeout(tryScroll, 100);
-        }
-        return;
-      }
+      if (!target) return;
       if (lenis) {
         lenis.scrollTo(hash, {
           offset,
-          duration: 1.3,
+          duration: smooth ? 1.0 : 0.3,
           easing: (x) => 1 - Math.pow(1 - x, 3),
           immediate: false,
         });
       } else {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        (target as HTMLElement).scrollIntoView({
+          behavior: smooth ? "smooth" : "auto",
+          block: "start",
+        });
       }
     };
 
-    const initial = window.setTimeout(tryScroll, 60);
+    const waitForTarget = (cb: () => void) => {
+      if (cancelled) return;
+      const target = document.querySelector(hash);
+      if (target) {
+        cb();
+        return;
+      }
+      if (attempts >= maxAttempts) return;
+      attempts += 1;
+      window.setTimeout(() => waitForTarget(cb), 100);
+    };
+
+    // First pass: scroll as soon as the target exists in the DOM.
+    const initial = window.setTimeout(
+      () => waitForTarget(() => performScroll(true)),
+      80
+    );
+
+    // Second pass: after window 'load' fires (images/fonts done), correct
+    // for any layout shift that moved the target further down the page.
+    let onLoad: (() => void) | null = null;
+    const fireCorrection = () => {
+      if (cancelled) return;
+      // Small grace period so Lenis isn't fighting itself
+      window.setTimeout(() => performScroll(false), 60);
+    };
+
+    if (document.readyState === "complete") {
+      window.setTimeout(fireCorrection, 600);
+    } else {
+      onLoad = () => fireCorrection();
+      window.addEventListener("load", onLoad, { once: true });
+    }
 
     return () => {
       cancelled = true;
       window.clearTimeout(initial);
+      if (onLoad) window.removeEventListener("load", onLoad);
     };
   }, [lenis, pathname]);
 
