@@ -6,7 +6,8 @@ import { sanityConfig } from "./sanity/config";
 
 export default defineConfig({
   name: "laksh-capital",
-  title: "Laksh Capital Blog",
+  title: "Laksh Capital Studio",
+  basePath: "/studio",
   projectId: sanityConfig.projectId,
   dataset: sanityConfig.dataset,
   plugins: [structureTool(), visionTool()],
