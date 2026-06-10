@@ -8,15 +8,7 @@ import footerSvg from "@/assets/footer.svg";
 import { SOCIALS } from "@/components/header";
 import { useScroll } from "@/hooks/use-scroll";
 import { REGULATORY } from "@/data/regulatory";
-
-const NAV_MENUS = [
-  { href: "#about", label: "About Us" },
-  { href: "#services", label: "Services" },
-  { href: "#team", label: "Our Team" },
-  { href: "#testimonials", label: "Testimonials" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
-];
+import { NAV_MENUS } from "@/data/nav";
 
 const Footer = () => {
   const scrollTo = useScroll();

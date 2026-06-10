@@ -14,15 +14,7 @@ import logoImg from "@/assets/logo.svg";
 import Image from "next/image";
 import { useScroll } from "@/hooks/use-scroll";
 import { Button } from "@/components/ui/button";
-
-const NAV_MENUS = [
-  { href: "#services", label: "Services" },
-  { href: "#team", label: "Our Team" },
-  { href: "/tools", label: "Tools" },
-  { href: "#faq", label: "FAQ" },
-  { href: "/blog", label: "Blog" },
-  { href: "#contact", label: "Contact" },
-];
+import { NAV_MENUS } from "@/data/nav";
 
 const SOCIALS = [
   {
