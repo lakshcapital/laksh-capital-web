@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import LenisWrapper from "@/lib/lenis";
+import ScrollResetOnRoute from "@/components/scroll-reset-on-route";
 
 export const metadata: Metadata = {
   title: {
@@ -54,7 +55,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <LenisWrapper>{children}</LenisWrapper>
+        <LenisWrapper>
+          <ScrollResetOnRoute />
+          {children}
+        </LenisWrapper>
         <Script
           src="https://assets.calendly.com/assets/external/widget.js"
           strategy="lazyOnload"
