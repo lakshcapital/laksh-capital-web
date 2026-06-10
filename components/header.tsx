@@ -17,9 +17,10 @@ import { Button } from "@/components/ui/button";
 const NAV_MENUS = [
   { href: "#services", label: "Services" },
   { href: "#team", label: "Our Team" },
+  { href: "/tools", label: "Tools" },
   { href: "#faq", label: "FAQ" },
-  { href: "#contact", label: "Contact" },
   { href: "/blog", label: "Blog" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const SOCIALS = [

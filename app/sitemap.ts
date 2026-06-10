@@ -9,9 +9,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
   }));
 
+  const toolUrls = [
+    "/tools",
+    "/tools/sip-calculator",
+    "/tools/lumpsum-calculator",
+    "/tools/retirement-planner",
+    "/tools/goal-sip-calculator",
+  ].map((path) => ({
+    url: `https://www.lakshcapital.in${path}`,
+    lastModified: new Date(),
+  }));
+
   return [
     { url: "https://www.lakshcapital.in", lastModified: new Date() },
     { url: "https://www.lakshcapital.in/blog", lastModified: new Date() },
     ...blogUrls,
+    ...toolUrls,
   ];
 }
