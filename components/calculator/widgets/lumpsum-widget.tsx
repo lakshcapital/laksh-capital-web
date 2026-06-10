@@ -60,20 +60,15 @@ export default function LumpsumWidget() {
         />
       </div>
 
-      <div className="lg:col-span-2 lg:row-span-2">
-        <div className="lg:sticky lg:top-24 space-y-4">
-          <ResultCard
-            primaryLabel="Future value"
-            primaryValue={result.futureValue}
-            rows={[
-              { label: "Invested", value: result.invested },
-              { label: "Returns", value: result.returns },
-            ]}
-          />
-        </div>
-      </div>
-
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-2 space-y-4">
+        <ResultCard
+          primaryLabel="Future value"
+          primaryValue={result.futureValue}
+          rows={[
+            { label: "Invested", value: result.invested },
+            { label: "Returns", value: result.returns },
+          ]}
+        />
         <GrowthChart data={series} />
       </div>
     </div>
