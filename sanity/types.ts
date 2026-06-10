@@ -72,6 +72,15 @@ export interface FaqItem {
   order?: number;
 }
 
+export interface Service {
+  _id: string;
+  title: string;
+  description: string;
+  image: SanityImageSource;
+  order?: number;
+  enlarge?: boolean;
+}
+
 export interface ContactSettings {
   _id: string;
   interestOptions?: string[];

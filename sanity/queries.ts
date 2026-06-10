@@ -6,6 +6,7 @@ import {
   FaqItem,
   Post,
   PostCard,
+  Service,
   TeamMember,
   Testimonial,
 } from "./types";
@@ -156,6 +157,14 @@ export async function getAllTestimonials(): Promise<Testimonial[]> {
   return client.fetch(
     `*[_type == "testimonial"] | order(coalesce(order, 999) asc, _createdAt desc) {
       _id, name, designation, company, message, avatar, order
+    }`
+  );
+}
+
+export async function getAllServices(): Promise<Service[]> {
+  return client.fetch(
+    `*[_type == "service"] | order(coalesce(order, 999) asc, _createdAt asc) {
+      _id, title, description, image, order, enlarge
     }`
   );
 }

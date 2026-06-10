@@ -1,35 +1,81 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import wealthManagementImg from "@/assets/services/wealth-management.jpeg";
+import mutualFundsImg from "@/assets/services/mutual-funds.jpeg";
+import pmsImg from "@/assets/services/portfolio-management.jpeg";
+import aifImg from "@/assets/services/alternate-investment.jpeg";
+import sifImg from "@/assets/services/specialised-investment.jpeg";
+import giftImg from "@/assets/services/gift-city.jpeg";
+import { getAllServices } from "@/sanity/queries";
+import { urlFor } from "@/sanity/image";
 
-interface Service {
+interface ServiceItem {
   title: string;
   description: string;
   image: string;
-  className?: string;
   enlarge?: boolean;
+}
+
+interface ServiceCardProps extends ServiceItem {
+  className?: string;
   last?: boolean;
 }
 
 interface ServicesProps {
   title: string;
   description: string;
-  service1: Service;
-  service2: Service;
-  service3: Service;
-  service4: Service;
-  service5: Service;
-  service6: Service;
   className?: string;
 }
 
-const Service = ({
+const FALLBACK_SERVICES: ServiceItem[] = [
+  {
+    title: "Wealth Management",
+    description:
+      "Holistic financial planning aligning investments, protection, and goals for long-term wealth creation.",
+    image: wealthManagementImg.src,
+    enlarge: true,
+  },
+  {
+    title: "Mutual Funds",
+    description:
+      "Goal-based mutual fund investments across equity, debt, and hybrid strategies, aligned with your long-term objectives.",
+    image: mutualFundsImg.src,
+  },
+  {
+    title: "Portfolio Management Service (PMS)",
+    description:
+      "Professionally managed, customized portfolios designed to optimize returns based on individual risk profiles.",
+    image: pmsImg.src,
+  },
+  {
+    title: "Alternate Investment Fund (AIF)",
+    description:
+      "Access exclusive alternative investment opportunities beyond traditional assets for enhanced portfolio diversification.",
+    image: aifImg.src,
+  },
+  {
+    title: "Specialised Investment Fund (SIF)",
+    description:
+      "Thematic and strategy-driven investments tailored for sophisticated investors seeking targeted growth opportunities.",
+    image: sifImg.src,
+  },
+  {
+    title: "GIFT City",
+    description:
+      "Global investment solutions through GIFT City enabling tax-efficient, internationally diversified portfolios.",
+    image: giftImg.src,
+    enlarge: true,
+  },
+];
+
+const ServiceCard = ({
   title,
   description,
   image,
   className,
   enlarge = false,
   last = false,
-}: Service) => {
+}: ServiceCardProps) => {
   return (
     <div
       className={cn(
@@ -64,17 +110,29 @@ const Service = ({
   );
 };
 
-const Services = ({
+export default async function Services({
   title,
-  description = "Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.",
-  service1,
-  service2,
-  service3,
-  service4,
-  service5,
-  service6,
+  description,
   className,
-}: ServicesProps) => {
+}: ServicesProps) {
+  const sanity = await getAllServices();
+
+  const items: ServiceItem[] = sanity.length
+    ? sanity.map((s, i) => ({
+        title: s.title,
+        description: s.description,
+        image: urlFor(s.image).width(1200).height(900).fit("crop").url(),
+        // Auto-enlarge first and last when not explicitly set
+        enlarge:
+          s.enlarge ?? (i === 0 || i === sanity.length - 1),
+      }))
+    : FALLBACK_SERVICES;
+
+  // Render up to 6 services in two rows of three with original layout pattern
+  const display = items.slice(0, 6);
+  const top = display.slice(0, 3);
+  const bottom = display.slice(3, 6);
+
   return (
     <section id="services" className={cn("py-16 md:py-24 lg:py-28", className)}>
       <div className="container">
@@ -89,20 +147,28 @@ const Services = ({
         <div className="relative flex justify-center">
           <div className="border-muted2 relative flex w-full flex-col border md:w-1/2 lg:w-full">
             <div className="relative flex flex-col lg:flex-row">
-              <Service {...service1} enlarge />
-              <Service {...service2} />
-              <Service {...service3} last />
+              {top.map((service, i) => (
+                <ServiceCard
+                  key={`top-${i}`}
+                  {...service}
+                  last={i === top.length - 1}
+                />
+              ))}
             </div>
-            <div className="border-muted2 relative flex flex-col border-t border-solid lg:flex-row">
-              <Service {...service4} />
-              <Service {...service5} />
-              <Service {...service6} last enlarge />
-            </div>
+            {bottom.length > 0 && (
+              <div className="border-muted2 relative flex flex-col border-t border-solid lg:flex-row">
+                {bottom.map((service, i) => (
+                  <ServiceCard
+                    key={`bottom-${i}`}
+                    {...service}
+                    last={i === bottom.length - 1}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default Services;
+}

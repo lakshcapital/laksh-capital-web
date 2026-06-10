@@ -8,7 +8,7 @@ import Services from "@/components/services";
 import Testimonials from "@/components/testimonials";
 import Header from "@/components/header";
 import Team from "@/components/team";
-import { HERO, SERVICES } from "@/data";
+import { HERO } from "@/data";
 import ScrollToTop from "@/components/scroll-to-top";
 import LatestBlogs from "@/components/latest-blogs";
 import TrustStrip from "@/components/trust-strip";
@@ -64,12 +64,6 @@ export default function Home() {
         <Services
           title="Our Services"
           description="Strategic financial solutions empowering confident decisions, sustainable growth, and future financial security."
-          service1={SERVICES[0]}
-          service2={SERVICES[1]}
-          service3={SERVICES[2]}
-          service4={SERVICES[3]}
-          service5={SERVICES[4]}
-          service6={SERVICES[5]}
         />
         <Team />
         <Testimonials />
