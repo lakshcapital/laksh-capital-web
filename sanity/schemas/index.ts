@@ -7,8 +7,12 @@ import teamMember from "./teamMember";
 import faqItem from "./faqItem";
 import contactSettings from "./contactSettings";
 import service from "./service";
+import heroSettings from "./heroSettings";
+import aboutSettings from "./aboutSettings";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
+  heroSettings,
+  aboutSettings,
   post,
   author,
   category,

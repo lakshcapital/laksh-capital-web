@@ -1,9 +1,11 @@
 import { client } from "./client";
 import {
+  AboutSettings,
   Author,
   Category,
   ContactSettings,
   FaqItem,
+  HeroSettings,
   Post,
   PostCard,
   Service,
@@ -181,6 +183,27 @@ export async function getAllFaqItems(): Promise<FaqItem[]> {
   return client.fetch(
     `*[_type == "faqItem"] | order(coalesce(order, 999) asc, _createdAt asc) {
       _id, question, answer, order
+    }`
+  );
+}
+
+export async function getHeroSettings(): Promise<HeroSettings | null> {
+  return client.fetch(
+    `*[_type == "heroSettings"] | order(_updatedAt desc) [0] {
+      _id, badge, heading, description, buttonText
+    }`
+  );
+}
+
+export async function getAboutSettings(): Promise<AboutSettings | null> {
+  return client.fetch(
+    `*[_type == "aboutSettings"] | order(_updatedAt desc) [0] {
+      _id,
+      description,
+      missionText,
+      frameworkHeading,
+      frameworkDescription,
+      frameworkCards[]{ icon, title, description }
     }`
   );
 }

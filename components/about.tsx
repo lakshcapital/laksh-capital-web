@@ -1,38 +1,37 @@
-import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import placeholderImg from "@/assets/about1.jpg";
 import missionBg from "@/assets/about2.jpg";
 import Image from "next/image";
-
-interface AboutCard {
-  icon: ReactNode;
-  title: string;
-  description: string;
-}
+import { getAboutSettings } from "@/sanity/queries";
+import { ABOUT_DEFAULTS } from "@/data/about-defaults";
+import { resolveAboutIcon } from "@/lib/about-icons";
 
 interface AboutProps {
-  description: string;
   placeholderImgSrc?: string;
   placeholderImgAlt?: string;
   missionBgImg?: string;
-  missionText: string;
-  heading2: string;
-  description2: string;
-  cards: AboutCard[];
   className?: string;
 }
 
-const About = ({
-  description,
+export default async function About({
   placeholderImgSrc = placeholderImg.src,
   placeholderImgAlt = "placeholder",
   missionBgImg = missionBg.src,
-  missionText,
-  heading2,
-  description2,
-  cards,
   className,
-}: AboutProps) => {
+}: AboutProps) {
+  const sanity = await getAboutSettings();
+
+  const description = sanity?.description || ABOUT_DEFAULTS.description;
+  const missionText = sanity?.missionText || ABOUT_DEFAULTS.missionText;
+  const frameworkHeading =
+    sanity?.frameworkHeading || ABOUT_DEFAULTS.frameworkHeading;
+  const frameworkDescription =
+    sanity?.frameworkDescription || ABOUT_DEFAULTS.frameworkDescription;
+  const cards =
+    sanity?.frameworkCards && sanity.frameworkCards.length
+      ? sanity.frameworkCards
+      : ABOUT_DEFAULTS.frameworkCards;
+
   return (
     <section
       id="about"
@@ -54,7 +53,7 @@ const About = ({
             src={placeholderImgSrc}
           />
           <div
-            className={`flex flex-col justify-between gap-10 rounded-2xl bg-muted bg-cover bg-center p-10`}
+            className="flex flex-col justify-between gap-10 rounded-2xl bg-muted bg-cover bg-center p-10"
             style={{
               backgroundImage: `url(${missionBgImg})`,
             }}
@@ -66,27 +65,30 @@ const About = ({
         <div className="flex flex-col gap-6 md:gap-20">
           <div className="max-w-xl">
             <h2 className="mb-4 text-2xl font-semibold tracking-tight md:text-4xl">
-              {heading2}
+              {frameworkHeading}
             </h2>
-            <p className="text-lg text-muted-foreground">{description2}</p>
+            <p className="text-lg text-muted-foreground">
+              {frameworkDescription}
+            </p>
           </div>
           <div className="grid gap-10 md:grid-cols-3">
-            {cards.map((card, i) => (
-              <div key={`about-card-${i}`} className="flex flex-col">
-                <div className="mb-5 flex size-12 items-center justify-center rounded-2xl bg-accent">
-                  {card.icon}
+            {cards.map((card, i) => {
+              const Icon = resolveAboutIcon(card.icon);
+              return (
+                <div key={`about-card-${i}`} className="flex flex-col">
+                  <div className="mb-5 flex size-12 items-center justify-center rounded-2xl bg-accent">
+                    <Icon className="size-4" />
+                  </div>
+                  <h3 className="mt-2 mb-3 text-lg font-semibold">
+                    {card.title}
+                  </h3>
+                  <p className="text-muted-foreground">{card.description}</p>
                 </div>
-                <h3 className="mt-2 mb-3 text-lg font-semibold">
-                  {card.title}
-                </h3>
-                <p className="text-muted-foreground">{card.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default About;
+}

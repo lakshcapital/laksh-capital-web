@@ -1,45 +1,25 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { ReactNode } from "react";
-import Image from "next/image";
+import { ArrowUpRight, Zap } from "lucide-react";
 import Logos from "./logos";
 import HeroIllustration from "./hero-illustration";
+import { getHeroSettings } from "@/sanity/queries";
+import { HERO_DEFAULTS } from "@/data/hero-defaults";
 
 interface HeroProps {
-  badge?: string;
-  heading: string;
-  description: string;
-  buttons?: {
-    primary?: {
-      text: string;
-      icon?: ReactNode;
-      url: string;
-    };
-    secondary?: {
-      text: string;
-      icon?: ReactNode;
-      url: string;
-    };
-  };
-  image?: {
-    src: string;
-    alt: string;
-  };
+  calendlyUrl?: string;
   className?: string;
 }
 
-const Hero = ({
-  badge,
-  heading,
-  description,
-  buttons = {
-    primary: { text: "", url: "" },
-  },
-  image,
-  className,
-}: HeroProps) => {
+export default async function Hero({ calendlyUrl, className }: HeroProps) {
+  const sanity = await getHeroSettings();
+  const badge = sanity?.badge ?? HERO_DEFAULTS.badge;
+  const heading = sanity?.heading || HERO_DEFAULTS.heading;
+  const description = sanity?.description || HERO_DEFAULTS.description;
+  const buttonText = sanity?.buttonText || HERO_DEFAULTS.buttonText;
+  const ctaHref = calendlyUrl || "#contact";
+
   return (
     <section
       id="hero"
@@ -64,47 +44,26 @@ const Hero = ({
               {description}
             </p>
             <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
-              {buttons.primary && (
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full font-semibold bg-linear-to-br from-primary to-green-500 sm:w-auto backdrop-blur-md"
+              <Button
+                asChild
+                size="lg"
+                className="w-full font-semibold bg-linear-to-br from-primary to-green-500 sm:w-auto backdrop-blur-md"
+              >
+                <a
+                  href={ctaHref}
+                  target={calendlyUrl ? "_blank" : undefined}
+                  rel={calendlyUrl ? "noopener noreferrer" : undefined}
                 >
-                  <a
-                    href={buttons.primary.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {buttons.primary.text} {buttons.primary.icon}
-                  </a>
-                </Button>
-              )}
-              {buttons.secondary && (
-                <Button asChild variant="outline" className="w-full sm:w-auto">
-                  <a href={buttons.secondary.url}>
-                    {buttons.secondary.text}
-                    <ArrowRight className="size-4" />
-                  </a>
-                </Button>
-              )}
+                  {buttonText}
+                  <Zap className="size-4" />
+                </a>
+              </Button>
             </div>
           </div>
-          {image ? (
-            <Image
-              width={1920}
-              height={1080}
-              src={image.src}
-              alt={image.alt}
-              className="max-h-96 w-full rounded-md object-cover shadow-sm backdrop-blur-md"
-            />
-          ) : (
-            <HeroIllustration />
-          )}
+          <HeroIllustration />
         </div>
         <Logos />
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

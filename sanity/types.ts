@@ -87,3 +87,26 @@ export interface ContactSettings {
   portfolioOptions?: string[];
   goalOptions?: string[];
 }
+
+export interface HeroSettings {
+  _id: string;
+  badge?: string;
+  heading?: string;
+  description?: string;
+  buttonText?: string;
+}
+
+export interface AboutCard {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface AboutSettings {
+  _id: string;
+  description?: string;
+  missionText?: string;
+  frameworkHeading?: string;
+  frameworkDescription?: string;
+  frameworkCards?: AboutCard[];
+}
