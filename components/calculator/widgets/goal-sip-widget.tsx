@@ -60,18 +60,20 @@ export default function GoalSIPWidget() {
         />
       </div>
 
-      <div className="lg:col-span-2">
-        <ResultCard
-          primaryLabel="Monthly SIP needed"
-          primaryValue={result.monthly}
-          rows={[
-            { label: "Total invested", value: result.invested },
-            { label: "Wealth generated", value: result.returns },
-          ]}
-        />
+      <div className="lg:col-span-2 lg:row-span-2">
+        <div className="lg:sticky lg:top-24 space-y-4">
+          <ResultCard
+            primaryLabel="Monthly SIP needed"
+            primaryValue={result.monthly}
+            rows={[
+              { label: "Total invested", value: result.invested },
+              { label: "Wealth generated", value: result.returns },
+            ]}
+          />
+        </div>
       </div>
 
-      <div className="lg:col-span-5">
+      <div className="lg:col-span-3">
         <GrowthChart data={series} />
       </div>
     </div>
