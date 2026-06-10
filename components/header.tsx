@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   CalendarClock,
   Facebook,
@@ -52,8 +53,13 @@ interface HeaderProps {
 
 const Header = ({ calendlyUrl }: HeaderProps) => {
   const scrollTo = useScroll();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const ctaHref = calendlyUrl || "mailto:info@lakshcapital.in";
   const isExternal = !!calendlyUrl;
+
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && !isHome ? `/${href}` : href;
 
   return (
     <header
@@ -74,9 +80,9 @@ const Header = ({ calendlyUrl }: HeaderProps) => {
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <Link
-                    href={menu.href}
+                    href={resolveHref(menu.href)}
                     onClick={(e) => {
-                      if (menu.href.startsWith("#")) {
+                      if (menu.href.startsWith("#") && isHome) {
                         e.preventDefault();
                         scrollTo(menu.href);
                       }

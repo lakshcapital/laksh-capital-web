@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Mail, Phone, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import footerSvg from "@/assets/footer.svg";
 import { SOCIALS } from "@/components/header";
@@ -19,6 +20,11 @@ const NAV_MENUS = [
 
 const Footer = () => {
   const scrollTo = useScroll();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && !isHome ? `/${href}` : href;
 
   return (
     <footer
@@ -31,10 +37,12 @@ const Footer = () => {
             {NAV_MENUS.map((menu, i) => (
               <li key={i}>
                 <Link
-                  href={menu.href}
+                  href={resolveHref(menu.href)}
                   onClick={(e) => {
-                    e.preventDefault();
-                    scrollTo(menu.href);
+                    if (menu.href.startsWith("#") && isHome) {
+                      e.preventDefault();
+                      scrollTo(menu.href);
+                    }
                   }}
                   className="font-medium transition-opacity hover:opacity-75"
                 >

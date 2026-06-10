@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { CalendarClock } from "lucide-react";
 import logoImg from "@/assets/logo.svg";
@@ -26,8 +27,13 @@ interface MobileMenuProps {
   calendlyUrl?: string;
 }
 const MobileMenu = ({ navMenus, socials, calendlyUrl }: MobileMenuProps) => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const ctaHref = calendlyUrl || "mailto:info@lakshcapital.in";
   const isExternal = !!calendlyUrl;
+
+  const resolveHref = (href: string) =>
+    href.startsWith("#") && !isHome ? `/${href}` : href;
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const scrollTo = useScroll();
   const lenis = useLenis();
@@ -69,9 +75,9 @@ const MobileMenu = ({ navMenus, socials, calendlyUrl }: MobileMenuProps) => {
             {navMenus.map((menu, i) => (
               <li key={i}>
                 <Link
-                  href={menu.href}
+                  href={resolveHref(menu.href)}
                   onClick={(e) => {
-                    if (menu.href.startsWith("#")) {
+                    if (menu.href.startsWith("#") && isHome) {
                       e.preventDefault();
                       lenis?.start();
                       scrollTo(menu.href);
