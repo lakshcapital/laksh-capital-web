@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import wealthManagementImg from "@/assets/services/wealth-management.jpeg";
 import mutualFundsImg from "@/assets/services/mutual-funds.jpeg";
 import pmsImg from "@/assets/services/portfolio-management.jpeg";
@@ -8,6 +10,7 @@ import sifImg from "@/assets/services/specialised-investment.jpeg";
 import giftImg from "@/assets/services/gift-city.jpeg";
 import { getAllServices } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+import { Button } from "@/components/ui/button";
 
 interface ServiceItem {
   title: string;
@@ -132,6 +135,7 @@ export default async function Services({
   const display = items.slice(0, 6);
   const top = display.slice(0, 3);
   const bottom = display.slice(3, 6);
+  const hasMore = items.length > 6;
 
   return (
     <section id="services" className={cn("py-16 md:py-24 lg:py-28", className)}>
@@ -168,6 +172,19 @@ export default async function Services({
             )}
           </div>
         </div>
+        {hasMore && (
+          <div className="mt-10 flex flex-col items-center gap-3 text-center">
+            <p className="text-sm text-muted-foreground">
+              Showing 6 of {items.length} services
+            </p>
+            <Button asChild size="lg" variant="outline" className="font-semibold">
+              <Link href="/services">
+                View all services
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

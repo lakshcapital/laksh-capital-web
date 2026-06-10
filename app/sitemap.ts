@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     { url: "https://www.lakshcapital.in", lastModified: new Date() },
     { url: "https://www.lakshcapital.in/blog", lastModified: new Date() },
+    { url: "https://www.lakshcapital.in/services", lastModified: new Date() },
     ...blogUrls,
     ...toolUrls,
   ];
