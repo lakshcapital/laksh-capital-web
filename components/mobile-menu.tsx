@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
 import logoImg from "@/assets/logo.svg";
 import { useLenis } from "lenis/react";
@@ -24,6 +25,7 @@ interface MobileMenuProps {
 }
 const MobileMenu = ({ navMenus, socials }: MobileMenuProps) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const pathname = usePathname();
   const scrollTo = useScroll();
   const lenis = useLenis();
 
@@ -61,21 +63,30 @@ const MobileMenu = ({ navMenus, socials }: MobileMenuProps) => {
         <nav className="h-[75%]">
           <p className="text-muted-foreground text-md mb-4">Menu</p>
           <ul className="flex flex-col gap-4 text-4xl text-black font-normal overflow-hidden">
-            {navMenus.map((menu, i) => (
-              <li key={i}>
-                <Link
-                  href={menu.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    lenis?.start();
-                    scrollTo(menu.href);
-                    setIsMenuVisible(false);
-                  }}
-                >
-                  {menu.label}
-                </Link>
-              </li>
-            ))}
+            {navMenus.map((menu, i) => {
+              const isAnchor = menu.href.startsWith("#");
+              const targetUrl = isAnchor && pathname !== "/" ? `/${menu.href}` : menu.href;
+
+              return (
+                <li key={i}>
+                  <Link
+                    href={targetUrl}
+                    onClick={(e) => {
+                      lenis?.start();
+                      setIsMenuVisible(false);
+
+                      // Trigger overlay anchor scrolling only if we are currently on the root path layout
+                      if (isAnchor && pathname === "/") {
+                        e.preventDefault();
+                        scrollTo(menu.href);
+                      }
+                    }}
+                  >
+                    {menu.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
         <div>
