@@ -29,6 +29,10 @@ const NAV_MENUS = [
     href: "#contact",
     label: "Contact",
   },
+  {
+    href: "/blog",
+    label: "Blog",
+  },
 ];
 
 const SOCIALS = [

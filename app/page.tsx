@@ -10,6 +10,7 @@ import Header from "@/components/header";
 import Team from "@/components/team";
 import { HERO, SERVICES } from "@/data";
 import ScrollToTop from "@/components/scroll-to-top";
+import LatestBlogs from "@/components/latest-blogs";
 
 export default function Home() {
   return (
@@ -69,6 +70,7 @@ export default function Home() {
         />
         <Team />
         <Testimonials />
+        <LatestBlogs />
         <FAQ />
         <Contact />
       </main>

@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "deifkwefumgah.cloudfront.net",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        pathname: "/**",
+      },
     ],
   },
   async redirects() {
