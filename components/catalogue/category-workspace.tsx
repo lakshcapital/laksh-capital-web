@@ -6,63 +6,36 @@ import type { CategoryAccent } from "./types";
 import { FundCard } from "./components/fund-card";
 import { BackButton } from "./components/shared";
 import { TickerTape } from "./components/ticker-tape";
-import { ProductDetailView } from "./components/product-detail-view";
+import { cataloguePaths } from "./utils/paths";
 
 interface CategoryWorkspaceProps {
   category: CategoryWithFunds;
   accent: CategoryAccent;
-  onBack: () => void;
 }
 
 export const CategoryWorkspace = React.memo(function CategoryWorkspace({
   category,
   accent,
-  onBack,
 }: CategoryWorkspaceProps) {
-
-  const funds = React.useMemo(() => category.funds || [], [category.funds]);
-  const [selectedFundId, setSelectedFundId] = React.useState<string | null>(null);
-
-  const activeFundData = React.useMemo(() => {
-    if (!selectedFundId) return null;
-    return funds.find((f) => f._id === selectedFundId) || null;
-  }, [selectedFundId, funds]);
-
-  const handleBackToCatalogueList = React.useCallback(() => {
-    setSelectedFundId(null);
-  }, []);
-
-  // Product Detail View
-  if (activeFundData) {
-    return (
-      <ProductDetailView 
-        fund={activeFundData}
-        categoryTitle={category.title}
-        categoryImage={category.fundImage || "/assets/services/wealth-management.jpeg"}
-        accent={accent}
-        onBack={handleBackToCatalogueList}
-      />
-    );
-  }
+  const funds = category.funds || [];
 
   return (
     <section className="animate-fade-up space-y-8">
-      <BackButton onClick={onBack} />
+      <BackButton href={cataloguePaths.home()} />
 
       {/* Top Banner */}
       <div className={cn("relative overflow-hidden rounded-2xl p-8 shadow-xs transition-colors", accent.bg)}>
         <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/10 to-transparent pointer-events-none" />
         <div className="dot-grid absolute inset-0 opacity-40 pointer-events-none" />
         <div className="relative grid grid-cols-1 gap-8 md:grid-cols-12">
-
           <div className="md:col-span-7 flex flex-col justify-center">
-
             <h2 className="mt-5 text-4xl font-semibold leading-[1.02] tracking-tight md:text-5xl text-white">
               {category.title}
             </h2>
 
             <p className="mt-4 max-w-xl text-base leading-relaxed text-white/85">
-              {category.description || "Sophisticated asset allocation models managed alongside strategic risk guardrails."}
+              {category.description ||
+                "Sophisticated asset allocation models managed alongside strategic risk guardrails."}
             </p>
 
             <div className="mt-6 flex flex-wrap gap-1.5">
@@ -76,6 +49,7 @@ export const CategoryWorkspace = React.memo(function CategoryWorkspace({
               ))}
             </div>
           </div>
+
           {/* Category Image */}
           <div className="md:col-span-5 flex items-center justify-center">
             <div className="group relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-primary/50">
@@ -88,7 +62,6 @@ export const CategoryWorkspace = React.memo(function CategoryWorkspace({
               />
             </div>
           </div>
-
         </div>
       </div>
 
@@ -111,7 +84,9 @@ export const CategoryWorkspace = React.memo(function CategoryWorkspace({
 
       {funds.length === 0 ? (
         <div className="text-center py-16 border border-dashed border-border rounded-2xl bg-card">
-          <p className="text-sm text-muted-foreground">No active tracking products mapped to this asset domain yet.</p>
+          <p className="text-sm text-muted-foreground">
+            No active tracking products mapped to this asset domain yet.
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -119,9 +94,8 @@ export const CategoryWorkspace = React.memo(function CategoryWorkspace({
             <FundCard
               key={fund._id}
               fund={fund}
-              categorySlug={category.slug || ""}
+              categorySlug={category.slug}
               accent={accent}
-              onViewDetails={setSelectedFundId}
             />
           ))}
         </div>

@@ -7,6 +7,7 @@ import { FundData } from "@/lib/sanity";
 import type { CategoryAccent } from "../types";
 import { formatLiveNav } from "../utils/formatters";
 import { getAugmentedFundMetrics } from "../utils/mock-ledger-data";
+import { cataloguePaths } from "../utils/paths";
 
 import { ProductHero } from "./product-detail/product-hero";
 import { PerformanceBlock } from "./product-detail/performance-block";
@@ -19,18 +20,17 @@ interface ProductDetailViewProps {
   fund: FundData;
   categoryTitle: string;
   categoryImage: string;
+  categorySlug: string;
   accent: CategoryAccent;
-  onBack: () => void;
 }
 
 export const ProductDetailView = React.memo(function ProductDetailView({
   fund,
   categoryTitle,
   categoryImage,
+  categorySlug,
   accent,
-  onBack,
 }: ProductDetailViewProps) {
-  
   const metrics = React.useMemo(() => {
     return getAugmentedFundMetrics(fund.fundName || "", categoryTitle);
   }, [fund.fundName, categoryTitle]);
@@ -49,7 +49,7 @@ export const ProductDetailView = React.memo(function ProductDetailView({
 
   return (
     <div className="animate-fade-up space-y-8 w-full">
-      <BackButton onClick={onBack} />
+      <BackButton href={cataloguePaths.category(categorySlug)} />
       {/* Product Hero */}
       <ProductHero 
         fund={fund}

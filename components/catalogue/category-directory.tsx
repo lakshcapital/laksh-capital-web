@@ -5,12 +5,10 @@ import { CategoryCard } from "./components/category-card";
 
 interface CategoryDirectoryProps {
   categories: Category[];
-  onSelect: (id: string) => void;
 }
 
 export const CategoryDirectory = React.memo(function CategoryDirectory({
   categories,
-  onSelect,
 }: CategoryDirectoryProps) {
   return (
     <section className="animate-fade-up">
@@ -31,12 +29,7 @@ export const CategoryDirectory = React.memo(function CategoryDirectory({
 
       <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {categories.map((cat, index) => (
-          <CategoryCard
-            key={cat.id}
-            category={cat}
-            index={index}
-            onSelect={onSelect}
-          />
+          <CategoryCard key={cat.id} category={cat} index={index} />
         ))}
       </div>
     </section>

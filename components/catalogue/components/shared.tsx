@@ -1,23 +1,32 @@
 import * as React from "react";
+import Link from "next/link";
 import { ArrowLeft, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const BackButton = React.memo(function BackButton({
+  href,
   onClick,
 }: {
-  onClick: () => void;
+  href?: string;
+  onClick?: () => void;
 }) {
+  const className =
+    "group inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-medium text-primary transition-all hover:border-primary hover:bg-primary hover:text-background shadow-xs cursor-pointer";
+
   return (
     <div>
-      <Button
-        onClick={onClick}
-        variant="outline"
-        className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-medium text-primary transition-all hover:border-primary hover:bg-primary hover:text-background shadow-xs cursor-pointer"
-      >
-        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-        Back
-      </Button>
+      {href ? (
+        <Link href={href} className={className}>
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+          Back
+        </Link>
+      ) : (
+        <Button onClick={onClick} variant="outline" className={className}>
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+          Back
+        </Button>
+      )}
     </div>
   );
 });
