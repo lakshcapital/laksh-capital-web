@@ -23,20 +23,26 @@ export function formatDisplayValue(
 
 export function formatNavDisplay(nav?: string | null): string {
   const raw = nav?.trim() ?? "";
-  if (!raw || raw === "N/A") return EMPTY_DISPLAY;
+  if (!raw || raw.toUpperCase() === "N/A") return EMPTY_DISPLAY;
 
-  const parsedNav = Number(raw);
-  if (Number.isNaN(parsedNav)) return EMPTY_DISPLAY;
+  // Preserve currency symbols from Sanity; format only the numeric part.
+  const match = raw.match(/^(\D*?)([+-]?\d[\d,]*(?:\.\d+)?)(\D*)$/);
+  if (!match) return raw;
 
-  return parsedNav.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
+  const [, prefix, numericPart, suffix] = match;
+  const parsedNav = Number(numericPart.replace(/,/g, ""));
+  if (Number.isNaN(parsedNav)) return raw;
+
+  const formattedNumber = parsedNav.toLocaleString("en-US", {
+    minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   });
+
+  return `${prefix}${formattedNumber}${suffix}`;
 }
 
 export function formatNavCurrency(nav?: string | null): string {
-  const formatted = formatNavDisplay(nav);
-  return formatted === EMPTY_DISPLAY ? EMPTY_DISPLAY : `${formatted}`;
+  return formatNavDisplay(nav);
 }
 
 export interface FundCardMetrics {

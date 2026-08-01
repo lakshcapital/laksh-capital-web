@@ -22,7 +22,7 @@ export const fundHeroMetricsType = defineType({
       name: "nav",
       title: "Current NAV",
       type: "string",
-      description: "Numeric NAV value as text (e.g. ₹142.56 or $142.56).",
+      description: "NAV with currency symbol as needed (e.g. ₹142.56 or $142.56).",
     }),
     defineField({
       name: "navDate",

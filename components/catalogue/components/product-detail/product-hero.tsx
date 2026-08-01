@@ -26,7 +26,6 @@ export const ProductHero = React.memo(function ProductHero({
   navChange,
   navDate,
 }: ProductHeroProps) {
-  const navLabel = finalNavString === "-" ? "-" : `${finalNavString}`;
   const classificationLabel = classification
     ? `Laksh Capital Asset Management · ${classification}`
     : "Laksh Capital Asset Management";
@@ -58,7 +57,7 @@ export const ProductHero = React.memo(function ProductHero({
           <div className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-md shadow-lg">
             <div className="text-xs text-white/70 font-semibold">Current Live NAV</div>
             <div className="mt-2 flex items-baseline gap-3">
-              <span className="text-4xl font-bold tracking-tight">{navLabel}</span>
+              <span className="text-4xl font-bold tracking-tight">{finalNavString}</span>
               <span className="rounded-md px-2 py-0.5 text-xs font-bold bg-white/20 text-white">
                 {formatDisplayValue(navChange)}
               </span>
