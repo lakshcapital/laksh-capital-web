@@ -1,12 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { CalendarDays, TrendingUp, Wallet, ShieldCheck, Briefcase, Sparkles } from "lucide-react";
 import { BackButton } from "./shared";
 import { FundData } from "@/lib/sanity";
 import type { CategoryAccent } from "../types";
-import { formatLiveNav } from "../utils/formatters";
-import { getAugmentedFundMetrics } from "../utils/mock-ledger-data";
+import { buildKeyFactItems, getFundCardMetrics } from "../utils/fund-display";
 import { cataloguePaths } from "../utils/paths";
 
 import { ProductHero } from "./product-detail/product-hero";
@@ -31,21 +29,8 @@ export const ProductDetailView = React.memo(function ProductDetailView({
   categorySlug,
   accent,
 }: ProductDetailViewProps) {
-  const metrics = React.useMemo(() => {
-    return getAugmentedFundMetrics(fund.fundName || "", categoryTitle);
-  }, [fund.fundName, categoryTitle]);
-
-  const finalNavString = formatLiveNav(fund.liveNav);
-
-  const factItems = React.useMemo(() => [
-    { icon: CalendarDays, label: "Inception Date", value: fund.liveNavDate || "02-Jan-2018" },
-    { icon: TrendingUp, label: "CAGR (Est.)", value: fund.baseReturnRate ? `${fund.baseReturnRate}%` : "18.4%" },
-    { icon: Wallet, label: "Fund Size (AUM)", value: "₹14,250 Cr" },
-    { icon: ShieldCheck, label: "Benchmark Index", value: "Nifty 50 TRI" },
-    { icon: Briefcase, label: "Min Investment", value: "₹500 Core" },
-    { icon: Sparkles, label: "Exit Load Parameter", value: fund.bonusRate ? `${fund.bonusRate}%` : "1.00%" },
-    { icon: Sparkles, label: "Expense Ratio (TER)", value: metrics.expense },
-  ], [fund, metrics]);
+  const metrics = React.useMemo(() => getFundCardMetrics(fund), [fund]);
+  const factItems = React.useMemo(() => buildKeyFactItems(fund), [fund]);
 
   return (
     <div className="animate-fade-up space-y-8 w-full">
@@ -56,23 +41,22 @@ export const ProductDetailView = React.memo(function ProductDetailView({
         categoryTitle={categoryTitle}
         categoryImage={categoryImage}
         accent={accent}
-        ticker={metrics.ticker}
-        rating={metrics.rating}
         classification={metrics.classification}
-        finalNavString={finalNavString}
+        rating={metrics.rating}
+        finalNavString={metrics.nav}
         navChange={metrics.navChange}
+        navDate={fund.heroMetrics?.navDate}
       />
 
-      {/* Product Detail Layout */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 w-full">
         <div className="lg:col-span-8 space-y-6 flex flex-col">
-          <PerformanceBlock accent={accent} />
+          <PerformanceBlock accent={accent} performance={fund.performance} />
           <StrategyBlock fund={fund} />
         </div>
 
         <aside className="lg:col-span-4 space-y-6 flex flex-col">
           <KeyFactsBlock items={factItems} />
-          <ManagerBlock accent={accent} />
+          <ManagerBlock accent={accent} manager={fund.manager} />
           <InvestCTA accent={accent} />
         </aside>
       </div>

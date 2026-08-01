@@ -39,14 +39,14 @@ export const fundType = defineType({
       description: "Detailed overview or disclaimer info for this investment product.",
     }),
     defineField({
-        name: "fundImage",
-        title: "Fund Logo / Image",
-        type: "image",
-        description: "Upload the Asset Management Company (AMC) logo or a background image for this fund card.",
-        options: {
-          hotspot: true,
-        },
-        validation: (Rule) => Rule.required().error("An image or logo is highly recommended for card design layouts."),
+      name: "fundImage",
+      title: "Fund Logo / Image",
+      type: "image",
+      description: "Upload the Asset Management Company (AMC) logo or a background image for this fund card.",
+      options: {
+        hotspot: true,
+      },
+      validation: (Rule) => Rule.required().error("An image or logo is highly recommended for card design layouts."),
     }),
     defineField({
       name: "tags",
@@ -57,6 +57,30 @@ export const fundType = defineType({
         layout: "tags",
       },
       description: "Press Enter after typing each tag (e.g., '100% Tax-Free', 'Low Risk').",
+    }),
+    defineField({
+      name: "heroMetrics",
+      title: "Hero Metrics",
+      type: "fundHeroMetrics",
+      description: "NAV, rating, and classification shown on cards and the product hero.",
+    }),
+    defineField({
+      name: "keyFacts",
+      title: "Key Facts",
+      type: "fundKeyFacts",
+      description: "Sidebar key-fact parameters for the product detail page.",
+    }),
+    defineField({
+      name: "performance",
+      title: "Performance",
+      type: "fundPerformance",
+      description: "Return periods and benchmark label for the performance block.",
+    }),
+    defineField({
+      name: "manager",
+      title: "Manager",
+      type: "fundManager",
+      description: "Assigned advisory lead shown on the product detail page.",
     }),
     defineField({
       name: "displayOrder",

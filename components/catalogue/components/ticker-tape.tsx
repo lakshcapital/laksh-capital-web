@@ -1,6 +1,6 @@
 import { FundData } from "@/lib/sanity";
 import * as React from "react";
-import { formatLiveNav } from "../utils/formatters";
+import { formatNavCurrency } from "../utils/fund-display";
 
 interface TickerTapeProps {
   funds: FundData[];
@@ -9,9 +9,9 @@ interface TickerTapeProps {
 export const TickerTape = React.memo(function TickerTape({ funds }: TickerTapeProps) {
   const tickerArray = React.useMemo(() => {
     if (!funds || funds.length === 0) return [];
-    const internalList = funds.map((f) => {
-      const displayNav = `₹${formatLiveNav(f.liveNav)}`;
-      return `${f.fundName} • NAV: ${displayNav}`;
+    const internalList = funds.map((fund) => {
+      const displayNav = formatNavCurrency(fund.heroMetrics?.nav);
+      return `${fund.fundName} • NAV: ${displayNav}`;
     });
     return [...internalList, ...internalList, ...internalList, ...internalList];
   }, [funds]);
@@ -37,3 +37,5 @@ export const TickerTape = React.memo(function TickerTape({ funds }: TickerTapePr
     </div>
   );
 });
+
+TickerTape.displayName = "TickerTape";

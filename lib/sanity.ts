@@ -7,6 +7,41 @@ export const sanityClient = createClient({
   useCdn: false,
 });
 
+export interface FundHeroMetrics {
+  classification?: string;
+  rating?: number;
+  nav?: string;
+  navDate?: string;
+  navChange?: string;
+}
+
+export interface FundKeyFacts {
+  inceptionDate?: string;
+  cagr?: string;
+  aum?: string;
+  benchmark?: string;
+  minInvestment?: string;
+  exitLoad?: string;
+  expenseRatio?: string;
+}
+
+export interface FundReturnPeriod {
+  period?: string;
+  fundReturn?: number;
+  benchmarkReturn?: number;
+}
+
+export interface FundPerformance {
+  benchmarkLabel?: string;
+  returnsPeriods?: FundReturnPeriod[];
+}
+
+export interface FundManager {
+  name?: string;
+  title?: string;
+  initials?: string;
+}
+
 export interface FundData {
   _id: string;
   fundName: string;
@@ -15,10 +50,10 @@ export interface FundData {
   description?: string;
   tags?: string[];
   imageUrl?: string;
-  baseReturnRate?: number;
-  bonusRate?: number;
-  liveNav?: string;
-  liveNavDate?: string;
+  heroMetrics?: FundHeroMetrics;
+  keyFacts?: FundKeyFacts;
+  performance?: FundPerformance;
+  manager?: FundManager;
 }
 
 export interface CategoryWithFunds {
@@ -44,9 +79,36 @@ const FUND_FIELDS = `
   schemeCode,
   description,
   tags,
-  baseReturnRate,
-  bonusRate,
-  "imageUrl": fundImage.asset->url
+  "imageUrl": fundImage.asset->url,
+  heroMetrics {
+    classification,
+    rating,
+    nav,
+    navDate,
+    navChange
+  },
+  keyFacts {
+    inceptionDate,
+    cagr,
+    aum,
+    benchmark,
+    minInvestment,
+    exitLoad,
+    expenseRatio
+  },
+  performance {
+    benchmarkLabel,
+    returnsPeriods[] {
+      period,
+      fundReturn,
+      benchmarkReturn
+    }
+  },
+  manager {
+    name,
+    title,
+    initials
+  }
 `;
 
 const CATEGORY_FIELDS = `

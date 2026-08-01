@@ -12,11 +12,3 @@ export interface Category {
   accent?: AccentKey;
   count: number;
 }
-
-export interface AugmentedMetrics {
-  ticker: string;
-  classification: string;
-  navChange: string;
-  expense: string;
-  rating: number;
-}

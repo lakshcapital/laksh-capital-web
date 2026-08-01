@@ -71,13 +71,28 @@ export const DataCell = React.memo(function DataCell({
 });
 
 // --- Rating Compliance ---
-export const StarRating = React.memo(function StarRating({ rating, fillColor = "emerald-500" }: { rating: number, fillColor?: string }) {
+const STAR_FILL_CLASSES = {
+  "emerald-500": "fill-emerald-500 text-emerald-500",
+  white: "fill-white text-white",
+} as const;
+
+type StarFillColor = keyof typeof STAR_FILL_CLASSES;
+
+export const StarRating = React.memo(function StarRating({
+  rating,
+  fillColor = "emerald-500",
+}: {
+  rating: number;
+  fillColor?: StarFillColor;
+}) {
+  const filledClass = STAR_FILL_CLASSES[fillColor] ?? STAR_FILL_CLASSES["emerald-500"];
+
   return (
     <div className="flex items-center gap-0.5 pt-1">
       {Array.from({ length: 5 }).map((_, idx) => (
         <Star
           key={idx}
-          className={cn("h-3 w-3", idx < rating ? `fill-${fillColor} text-${fillColor}` : "text-border")}
+          className={cn("h-3 w-3", idx < rating ? filledClass : "text-border")}
         />
       ))}
     </div>
@@ -98,7 +113,7 @@ export const FundBrandingIcon = React.memo(function FundBrandingIcon({
 }: BrandingIconProps) {
   if (imageUrl) {
     return (
-      <div className="flex h-11 w-11 items-center justify-center rounded-xl p-1.5 border border-border bg-white shrink-0 shadow-2xs">
+      <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-white shrink-0 shadow-2xs">
         <img src={imageUrl} alt={fundName} className="max-h-full max-w-full object-contain object-center" />
       </div>
     );

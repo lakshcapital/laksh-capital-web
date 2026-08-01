@@ -4,8 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FundData } from "@/lib/sanity";
 import type { CategoryAccent } from "../types";
-import { formatLiveNav } from "../utils/formatters";
-import { getAugmentedFundMetrics } from "../utils/mock-ledger-data";
+import { formatNavCurrency, getFundCardMetrics } from "../utils/fund-display";
 import { cataloguePaths } from "../utils/paths";
 import { DataCell, FundBrandingIcon, StarRating } from "./shared";
 
@@ -20,12 +19,9 @@ export const FundCard = React.memo(function FundCard({
   categorySlug,
   accent,
 }: FundCardProps) {
-  const metrics = React.useMemo(() => {
-    return getAugmentedFundMetrics(fund.fundName || "", categorySlug || "");
-  }, [fund.fundName, categorySlug]);
-
-  const finalNavString = formatLiveNav(fund.liveNav);
+  const metrics = React.useMemo(() => getFundCardMetrics(fund), [fund]);
   const href = cataloguePaths.fund(categorySlug, fund.slug);
+  const tags = fund.tags?.filter(Boolean).slice(0, 3) || [];
 
   return (
     <article className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_-30px_rgba(15,23,42,0.12)] h-full">
@@ -44,29 +40,41 @@ export const FundCard = React.memo(function FundCard({
             </div>
           </div>
 
-          <StarRating rating={metrics.rating} />
+          {metrics.rating > 0 && <StarRating rating={metrics.rating} />}
         </div>
 
         <h4 className="mt-5 text-lg font-semibold leading-snug tracking-tight text-foreground group-hover:text-emerald-600 transition-colors line-clamp-2">
           {fund.fundName}
         </h4>
-        <div className="mt-1 text-xs text-muted-foreground font-medium">
-          {metrics.classification}
-        </div>
+        {metrics.classification ? (
+          <div className="mt-1 text-xs text-muted-foreground font-medium">
+            {metrics.classification}
+          </div>
+        ) : (
+          <div className="mt-1 text-xs text-muted-foreground font-medium min-h-[1rem]" />
+        )}
 
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {(fund.tags || ["High Conviction", "Tax Optimized"]).slice(0, 3).map((tag) => (
-            <span key={tag} className={cn("rounded-full px-2.5 py-1 text-xs font-medium border transition-colors", accent.soft)}>
-              {tag}
-            </span>
-          ))}
-        </div>
+        {tags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className={cn(
+                  "rounded-full px-2.5 py-1 text-xs font-medium border transition-colors",
+                  accent.soft
+                )}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Synchronized Core Row Values Ledger Block */}
       <div className="mt-6 pt-2 space-y-5">
         <div className="grid grid-cols-3 gap-2 rounded-2xl bg-muted/60 p-4 border border-border/60">
-          <DataCell label="Tracked NAV" value={`₹${finalNavString}`} />
+          <DataCell label="Tracked NAV" value={formatNavCurrency(fund.heroMetrics?.nav)} />
           <DataCell label="Movement" value={metrics.navChange} useEmerald />
           <DataCell label="Expense" value={metrics.expense} />
         </div>
@@ -84,3 +92,5 @@ export const FundCard = React.memo(function FundCard({
     </article>
   );
 });
+
+FundCard.displayName = "FundCard";
