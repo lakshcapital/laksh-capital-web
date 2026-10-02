@@ -48,11 +48,11 @@ const ContactForm = ({
   email = "info@lakshcapital.in",
   address = (
     <span>
-      510, Damji Shamji Trade Centre,
+      603, Pancham Pinnacle, Hingwala Lane,
       <br />
-      Near Vidyavihar Railway Station,
+      Opp Zaverben Popatlal Auditorium,
       <br />
-      Vidyavihar West, Mumbai, 400086
+      Ghatkopar East, Mumbai - 400077
     </span>
   ),
   settings,

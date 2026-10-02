@@ -1,9 +1,11 @@
-// TODO: replace placeholder values with real registration details.
-// Required for Indian wealth advisory regulatory compliance.
 export const REGULATORY = {
   legalEntity: "Niveshmitra Capital Services Private Limited",
-  amfiArn: "ARN-XXXXXX",
-  arnValidFrom: "DD-MMM-YYYY",
+  amfiArn: "ARN-339767",
+  arnValidFrom: "09/09/2025",
+  arnValidTo: "08/09/2028",
+  aprn: "APRN-07045",
+  aprnValidFrom: "07/01/2025",
+  aprnValidTo: "06/01/2028",
   principalOfficer: "CA Dhruval Shah",
   euin: "EXXXXXX",
   grievanceOfficer: {

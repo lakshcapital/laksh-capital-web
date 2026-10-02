@@ -94,14 +94,25 @@ const Footer = () => {
               </div>
             </div>
 
-            <dl className="grid gap-y-3 gap-x-8 text-xs md:grid-cols-3">
+            <dl className="grid gap-y-5 gap-x-8 text-xs grid-cols-2 md:grid-cols-4">
               <div>
                 <dt className="font-semibold text-white/95">AMFI ARN</dt>
                 <dd className="text-white/75 mt-0.5">
                   {REGULATORY.amfiArn}
-                  {REGULATORY.arnValidFrom && (
+                  {REGULATORY.arnValidFrom && REGULATORY.arnValidTo && (
                     <span className="block text-white/55">
-                      Valid from {REGULATORY.arnValidFrom}
+                      Valid {REGULATORY.arnValidFrom} - {REGULATORY.arnValidTo}
+                    </span>
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-white/95">APRN</dt>
+                <dd className="text-white/75 mt-0.5">
+                  {REGULATORY.aprn}
+                  {REGULATORY.aprnValidFrom && REGULATORY.aprnValidTo && (
+                    <span className="block text-white/55">
+                      Valid {REGULATORY.aprnValidFrom} - {REGULATORY.aprnValidTo}
                     </span>
                   )}
                 </dd>
