@@ -71,3 +71,32 @@ export interface FaqItem {
   answer: PortableTextBlock[];
   order?: number;
 }
+
+export interface GrievanceOfficer {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface RegistrationEntry {
+  category: string;
+  entityName: string;
+  registrationNumber: string;
+}
+
+export interface RegistrationDisclosure {
+  _id: string;
+  introText?: string;
+  legalEntity?: string;
+  amfiArn?: string;
+  amfiArnValidFrom?: string;
+  amfiArnValidTo?: string;
+  aprn?: string;
+  aprnValidFrom?: string;
+  aprnValidTo?: string;
+  principalOfficer?: string;
+  euin?: string;
+  grievanceOfficer?: GrievanceOfficer;
+  riskDisclaimer?: string;
+  registrations?: RegistrationEntry[];
+}

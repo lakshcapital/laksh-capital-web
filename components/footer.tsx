@@ -89,6 +89,11 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Laksh Capital. All rights
             reserved.
           </p>
+          <p>
+            <Link href="/registrations" className="underline hover:opacity-75">
+              Registration Disclosure
+            </Link>
+          </p>
         </div>
 
         <Image

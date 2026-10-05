@@ -9,10 +9,11 @@ import { useScroll } from "@/hooks/use-scroll";
 import { usePathname } from "next/navigation";
 
 const NAV_MENUS = [
-  {
-    href: "/catalogue",
-    label: "Catalogue",
-  },
+  // Hidden for now — re-add to bring the Catalogue link back to the nav.
+  // {
+  //   href: "/catalogue",
+  //   label: "Catalogue",
+  // },
   {
     href: "#services",
     label: "Services",

@@ -5,6 +5,7 @@ import {
   FaqItem,
   Post,
   PostCard,
+  RegistrationDisclosure,
   TeamMember,
   Testimonial,
 } from "./types";
@@ -171,6 +172,27 @@ export async function getAllFaqItems(): Promise<FaqItem[]> {
   return client.fetch(
     `*[_type == "faqItem"] | order(coalesce(order, 999) asc, _createdAt asc) {
       _id, question, answer, order
+    }`
+  );
+}
+
+export async function getRegistrationDisclosure(): Promise<RegistrationDisclosure | null> {
+  return client.fetch(
+    `*[_type == "registrationDisclosure"] | order(_updatedAt desc) [0] {
+      _id,
+      introText,
+      legalEntity,
+      amfiArn,
+      amfiArnValidFrom,
+      amfiArnValidTo,
+      aprn,
+      aprnValidFrom,
+      aprnValidTo,
+      principalOfficer,
+      euin,
+      grievanceOfficer,
+      riskDisclaimer,
+      registrations
     }`
   );
 }

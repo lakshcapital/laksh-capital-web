@@ -11,6 +11,7 @@ import { fundKeyFactsType } from "./fundKeyFacts";
 import { fundReturnPeriodType } from "./fundReturnPeriod";
 import { fundPerformanceType } from "./fundPerformance";
 import { fundManagerType } from "./fundManager";
+import registrationDisclosure from "./registrationDisclosure";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   post,
@@ -25,4 +26,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   fundReturnPeriodType,
   fundPerformanceType,
   fundManagerType,
+  registrationDisclosure,
 ];
