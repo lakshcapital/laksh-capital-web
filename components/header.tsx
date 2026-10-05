@@ -6,8 +6,14 @@ import MobileMenu from "./mobile-menu";
 import logoImg from "@/assets/logo.svg";
 import Image from "next/image";
 import { useScroll } from "@/hooks/use-scroll";
+import { usePathname } from "next/navigation";
 
 const NAV_MENUS = [
+  // Hidden for now — re-add to bring the Catalogue link back to the nav.
+  // {
+  //   href: "/catalogue",
+  //   label: "Catalogue",
+  // },
   {
     href: "#services",
     label: "Services",
@@ -23,6 +29,10 @@ const NAV_MENUS = [
   {
     href: "#contact",
     label: "Contact",
+  },
+  {
+    href: "/blog",
+    label: "Blog",
   },
 ];
 
@@ -51,6 +61,7 @@ const SOCIALS = [
 
 const Header = () => {
   const scrollTo = useScroll();
+  const pathname = usePathname();
 
   return (
     <header id="header" className="relative overflow-hidden">
@@ -68,11 +79,15 @@ const Header = () => {
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <Link
-                    href={menu.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollTo(menu.href);
-                    }}
+                  href={menu.href.startsWith("#") && pathname !== "/" ? `/${menu.href}` : menu.href}
+                  onClick={(e) => {
+                    if (menu.href.startsWith("#")) {
+                      if (pathname === "/") {
+                        e.preventDefault();
+                        scrollTo(menu.href);
+                      }
+                    }
+                  }}
                   >
                     {menu.label}
                   </Link>
